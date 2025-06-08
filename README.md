@@ -3,7 +3,7 @@
   ![on-pull-request](../../actions/workflows/on-pull-request.yaml/badge.svg)
   ![on-schedule](../../actions/workflows/on-schedule.yaml/badge.svg)
 
-  # Yueyuanh's Website
+  # TUP Lab Website
 
   Visit **[yueyuanh.github.io/tup-lab-website](https://yueyuanh.github.io/tup-lab-website)** 🚀
 
