@@ -5,6 +5,6 @@
 
   # TUP Lab Website
 
-  Visit **[yueyuanh.github.io/tup-lab-website](https://yueyuanh.github.io/tup-lab-website)** 🚀
+  Visit **[tup-robomaster.github.io/tup-lab-website](https://tup-robomaster.github.io/tup-lab-website)** 🚀
 
   _Built with [Lab Website Template](https://greene-lab.gitbook.io/lab-website-template-docs)_
