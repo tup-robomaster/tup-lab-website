@@ -1,1 +1,1 @@
-Sitemap: https://yueyuanh.github.io/tup-lab-website/sitemap.xml
+Sitemap: https://tup-robomaster.github.io/tup-lab-website/sitemap.xml
