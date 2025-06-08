@@ -1,6 +1,6 @@
 {% assign image = page.header | default: site.header | relative_url %}
 {% assign dark = page.header-dark | is_nil: site.header-dark | is_nil: true %}
-{% assign video =  page.header-video | default: site.header-video | relative_url %}
+{% assign video =  page.header-video | default: site.header-video %}
 
 {% assign svg = "images/logo.svg" | file_exists %}
 {% assign png = "images/logo.png" | file_exists %}
@@ -21,11 +21,17 @@
 >
 {% if page.url=="/" %}
   <div class="overlay"></div>
-  <video class="background-video" preload="auto" playsinline="true" x5-playsinline="true" webkit-playsinline="true" name="media" autoplay="autoplay" loop="loop" muted="muted" data-wf-ignore="true" data-object-fit="cover" 
-      poster="{{ image }}" 
-      src="/images/bgvideo.mp4" 
-      >
+  <video
+    id="bgvideo"
+    class="background-video"
+    preload="auto"
+    playsinline
+    autoplay
+    loop
+    muted
 
+    >
+    <source src="{{ video | relative_url }}" type="video/mp4">
   </video>
 {% endif %}
   <a href="{{ "/" | relative_url }}" class="home">
