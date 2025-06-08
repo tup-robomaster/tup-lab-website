@@ -19,21 +19,32 @@
     data-big
   {% endif %}
 >
-{% if page.url=="/" %}
+{% if page.url == "/" %}
   <div class="overlay"></div>
   <video
     id="bgvideo"
     class="background-video"
+    poster="{{ image }}"
     preload="auto"
-    playsinline
     autoplay
-    loop
     muted
-
-    >
+    loop
+    playsinline
+  >
     <source src="{{ video | relative_url }}" type="video/mp4">
   </video>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const video = document.getElementById("bgvideo");
+      if (video) {
+        video.addEventListener("canplay", function () {
+          video.play().catch(err => console.log("Play error:", err));
+        });
+      }
+    });
+  </script>
 {% endif %}
+
   <a href="{{ "/" | relative_url }}" class="home">
     {% if logo %}
       <span class="logo">
