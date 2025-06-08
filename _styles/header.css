@@ -3,7 +3,7 @@ header {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 80px;
   padding: 20px;
   box-shadow: var(--shadow);
   position: sticky !important;
@@ -121,7 +121,7 @@ header[data-big] {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 100px 20px;
+  padding: 300px 20px;
   top: unset;
 }
 header[data-big] .home {
