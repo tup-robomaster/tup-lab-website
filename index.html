@@ -383,9 +383,20 @@
 <header class="background" data-dark="true" data-big>
 
   <div class="overlay"></div>
-  <video id="bgvideo" class="background-video" preload="auto" playsinline autoplay loop muted>
+  <video id="bgvideo" class="background-video" poster="/tup-lab-website/images/background.png" preload="auto" autoplay muted loop playsinline>
     <source src="/tup-lab-website/images/bgvideo.mp4" type="video/mp4">
   </source></video>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const video = document.getElementById("bgvideo");
+      if (video) {
+        video.addEventListener("canplay", function () {
+          video.play().catch(err => console.log("Play error:", err));
+        });
+      }
+    });
+  </script>
+
 
   <a href="/tup-lab-website/" class="home">
     
@@ -1072,9 +1083,37 @@ OQAAAABJRU5ErkJggg=="></image>
   
 
   <section class="background" data-size="page">
-    <h1 id="yueyuanhs-website">Yueyuanh’s Website</h1>
+    <!-- 主界面在这里修改 -->
+<h1 id="welcome-to-tup-robotics-lab">Welcome to TUP Robotics Lab</h1>
 
-<p>An engaging 1-3 sentence description of your lab.</p>
+<p><strong>TUP战队</strong>依托于创新创业学院SH智能机器人俱乐部，由吕荣鑫老师带队指导，战队成立于2015年，在校党委的正确领导下，和历届团队成员的努力下，经过10年的发展，现已成为沈航唯一的集机械设计制造、嵌入式软硬件开发与视觉识别以及团队运营的科技创新俱乐部，俱乐部成员以参加全国大学生机器人<strong>RoboMaster</strong>大赛为主，辐射周边各类竞赛。随着时间的推移，俱乐部形成了自己独有的培训、选拔体系及多元化考核方式。并融合在课堂内学习到的知识与技术，将这些优势汇集到一起，造就了沈航机器人在赛场上拥有强力而稳定的表现。</p>
+
+<div class="button-wrapper">
+    <a class="button" href="https://space.bilibili.com/286752024" data-tooltip="Documentation" data-style="" aria-label="Documentation">
+      <i class="icon fa-brands fa-bilibili"></i>
+      
+        <span>Bilibili</span>
+      
+    </a>
+  </div>
+
+<div class="button-wrapper">
+    <a class="button" href="https://github.com/https://github.com/tup-robomaster" data-tooltip="GitHub" data-style="" aria-label="GitHub">
+      <i class="icon fa-brands fa-github"></i>
+      
+        <span>GitHub</span>
+      
+    </a>
+  </div>
+
+<div class="button-wrapper">
+    <a class="button" href="https://mp.weixin.qq.com/mp/homepage?__biz=MzkwODAwMTk4NQ==&hid=1&sn=646e27086d5836bb6cbfb369cdd08799&scene=18#wechat_redirect" data-tooltip="Documentation" data-style="" aria-label="Documentation">
+      <i class="icon fa-brands fa-weixin"></i>
+      
+        <span>微信公众号</span>
+      
+    </a>
+  </div>
   </section>
 
   
@@ -1088,18 +1127,20 @@ OQAAAABJRU5ErkJggg=="></image>
   <size></size>
 -->
 
-<h2 id="highlights">Highlights</h2>
+<h2 id="高光时刻-highlights">高光时刻-Highlights</h2>
+
+<!-- 第一行 -->
 
 <div class="feature">
   <a href="/tup-lab-website/research" class="feature-image" aria-label="Our Research">
-    <img src="/tup-lab-website/images/photo.jpg" loading="lazy" alt="Our Research" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+    <img src="/tup-lab-website/images/index/10.png" loading="lazy" alt="Our Research" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   <div class="feature-text">
     
       <p class="feature-title">Our Research</p>
     
     
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<p>111 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
 <div class="button-wrapper">
     <a class="button" href="/tup-lab-website/research" data-style="bare" data-flip="" aria-label="fa-solid fa-arrow-right">
@@ -1114,9 +1155,11 @@ OQAAAABJRU5ErkJggg=="></image>
   </div>
 </div>
 
+<!-- 第二行 -->
+
 <div class="feature" data-flip="">
   <a href="/tup-lab-website/projects" class="feature-image" aria-label="Our Projects">
-    <img src="/tup-lab-website/images/photo.jpg" loading="lazy" alt="Our Projects" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+    <img src="/tup-lab-website/images/index/1.png" loading="lazy" alt="Our Projects" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   <div class="feature-text">
     
@@ -1140,7 +1183,7 @@ OQAAAABJRU5ErkJggg=="></image>
 
 <div class="feature">
   <a href="/tup-lab-website/team" class="feature-image" aria-label="Our Team">
-    <img src="/tup-lab-website/images/photo.jpg" loading="lazy" alt="Our Team" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+    <img src="/tup-lab-website/images/index/cheer.png" loading="lazy" alt="Our Team" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   <div class="feature-text">
     
