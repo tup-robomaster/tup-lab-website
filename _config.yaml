@@ -1,16 +1,17 @@
 # site properties and page defaults
-title: Yueyuanh
-subtitle: 
-description: An engaging 1-3 sentence description of your lab.
-header: images/background.jpg
-footer: images/background.jpg
+title: TUP Lab Website
+subtitle: 冠木承鹏，任尔狂风
+description: 沈阳航空航天大学SH智能机器人俱乐部 TUP战队 官网
+header: images/background.png
+header-video: images/bgvideo.mp4
+footer: images/background.png
 proofer: false
 
 # site social media and other links
 links:
   email: contact@Yueyuanh.com
-  orcid: 0000-0001-8713-9213
-  google-scholar: ETJoidYAAAAJ
+  # orcid: 0000-0001-8713-9213
+  # google-scholar: ETJoidYAAAAJ
   github: Yueyuanh
   twitter: Yueyuanh
   youtube: Yueyuanh

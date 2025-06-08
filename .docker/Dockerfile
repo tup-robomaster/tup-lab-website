@@ -13,8 +13,18 @@ RUN VERSION=$(grep -A 1 'BUNDLED WITH' Gemfile.lock | tail -n 1 | xargs); \
     bundle _${VERSION}_ install
 
 # install python
-RUN apt update && apt install -y python3 python3-pip
+# RUN apt update && apt install -y python3 python3-pip
 
+# 使用清华源替换
+RUN sed -i 's|deb.debian.org|mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list \
+    && sed -i 's|security.debian.org|mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list
+
+# 安装 Python（分步执行）
+RUN apt update \
+    && apt install -y --no-install-recommends \
+        python3 \
+        python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 # install python packages
 RUN python3 -m pip install --no-cache-dir --upgrade --requirement requirements.txt
 
