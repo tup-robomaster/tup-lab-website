@@ -1,0 +1,7 @@
+<div class="wechat-article-card">
+  <a href="{{ include.url }}" target="_blank" class="wechat-article-link">
+    <img src="{{ include.cover | relative_url }}" alt="{{ include.title }}" class="wechat-article-cover">
+    <div class="wechat-article-title">{{ include.title }}</div>
+  </a>
+  <div class="wechat-article-excerpt">{{ include.excerpt }}</div>
+</div>
