@@ -1,0 +1,81 @@
+<div class="carousel-container">
+  <div class="carousel">
+    {% for video in include.videos %}
+      <a href="{{ video.url }}" target="_blank" class="carousel-item">
+        <img src="{{ video.cover }}" alt="Video Cover">
+      </a>
+    {% endfor %}
+  </div>
+  <button class="carousel-prev">←</button>
+  <button class="carousel-next">→</button>
+</div>
+
+<style>
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  gap: 10px; /* 图片间距 */
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  width: 300px; /* 可根据需要调整 */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.querySelector('.carousel');
+  const prevButton = document.querySelector('.carousel-prev');
+  const nextButton = document.querySelector('.carousel-next');
+  const itemWidth = 310; // 包含间距的宽度
+
+  prevButton.addEventListener('click', function() {
+    carousel.scrollBy({
+      left: -itemWidth,
+      behavior: 'smooth'
+    });
+  });
+
+  nextButton.addEventListener('click', function() {
+    carousel.scrollBy({
+      left: itemWidth,
+      behavior: 'smooth'
+    });
+  });
+});
+</script>

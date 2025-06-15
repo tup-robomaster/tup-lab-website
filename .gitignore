@@ -1,6 +1,7 @@
-_site
-.sass-cache
-.jekyll-cache
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
 .jekyll-metadata
 vendor
 debug.log
@@ -11,3 +12,7 @@ package.json
 package-lock.json
 yarn.lock
 node_modules
+
+# Manubot (from your project)
+_cite/cache/
+_cite/generated/

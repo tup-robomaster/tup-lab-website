@@ -28,16 +28,17 @@
 
 {% include section.html %}
 
-## 高光时刻-Highlights
+## 也许你喜欢-RECOMMEND
 
 <!-- 第一行 -->
 {% capture text %}
 
-111 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+在 2024 年机甲大师超级对抗赛中，沈阳航空航天大学 TUP 战队在中部赛区比赛中表现出色，成功跻身十六强
+
 
 {%
   include button.html
-  link="research"
+  link="projects"
   text="See our publications"
   icon="fa-solid fa-arrow-right"
   flip=true
@@ -49,8 +50,8 @@
 {%
   include feature.html
   image="images/index/10.png"
-  link="research"
-  title="Our Research"
+  link="projects"
+  title="成果"
   text=text
 %}
 
@@ -58,12 +59,12 @@
 <!-- 第二行 -->
 {% capture text %}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+聆听我们的成长故事，触摸梦想的炽热温度
 
 {%
   include button.html
-  link="projects"
-  text="Browse our projects"
+  link="story"
+  text="Read Our Story"
   icon="fa-solid fa-arrow-right"
   flip=true
   style="bare"
@@ -74,20 +75,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 {%
   include feature.html
   image="images/index/1.png"
-  link="projects"
-  title="Our Projects"
+  link="story"
+  title="成长故事"
   flip=true
   style="bare"
   text=text
 %}
 
+<!-- 第三行 -->
 {% capture text %}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+定格岁月的绚丽光影，珍藏时光的温暖画卷。<br>
+细览往昔的斑斓相册，品味记忆的璀璨瞬间。
 
 {%
   include button.html
-  link="team"
+  link="gallery"
   text="Meet our team"
   icon="fa-solid fa-arrow-right"
   flip=true
@@ -99,7 +102,57 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 {%
   include feature.html
   image="images/index/cheer.png"
-  link="team"
-  title="Our Team"
+  link="gallery"
+  title="战队相册"
+  text=text
+%}
+
+<!-- 第四行 -->
+{% capture text %}
+
+了解更多内容
+
+{%
+  include button.html
+  link="more"
+  text="Learn More"
+  icon="fa-solid fa-arrow-right"
+  flip=true
+  style="bare"
+%}
+
+{% endcapture %}
+
+{%
+  include feature.html
+  image="images/index/1.png"
+  link="more"
+  title="更多内容"
+  flip=true
+  style="bare"
+  text=text
+%}
+
+
+<!-- 第五行 -->
+{% capture text %}
+
+
+{%
+  include button.html
+  link="join"
+  text="Join us"
+  icon="fa-solid fa-arrow-right"
+  flip=true
+  style="bare"
+%}
+
+{% endcapture %}
+
+{%
+  include feature.html
+  image="images/index/cheer.png"
+  link="join"
+  title="加入我们"
   text=text
 %}

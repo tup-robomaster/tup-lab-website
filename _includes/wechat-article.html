@@ -1,0 +1,68 @@
+
+<div class="citation">
+  <a 
+    href="{{ include.url }}" 
+    target="_blank" 
+    class="citation-image" 
+    aria-label="{{ include.title | regex_strip }}"
+  >
+    {% if include.cover %}
+      <img 
+        src="{{ include.cover | relative_url }}" 
+        alt="{{ include.title }}" 
+        class="wechat-cover"
+        loading="lazy"
+      >
+    {% endif %}
+  </a>
+
+  <div class="citation-text">
+    <a 
+      href="{{ include.url }}" 
+      target="_blank" 
+      class="citation-title"
+    >
+      {{ include.title | default: "[无标题]" }}
+    </a>
+
+    <div class="wechat-excerpt">
+      {{ include.excerpt | default: "[无摘要]" | markdownify }}
+    </div>
+  </div>
+</div>
+
+<style>
+/* 样式部分保持不变 */
+.citation {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.wechat-cover {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.citation-text .citation-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #222;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.citation-text .citation-title:hover {
+  color: #0795d9;
+}
+
+.wechat-excerpt {
+  color: #666;
+  font-size: 0.9em;
+  margin: 8px 0 0 0;
+}
+</style>
