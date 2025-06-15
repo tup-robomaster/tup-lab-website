@@ -11,7 +11,7 @@ nav:
 
 {% include section.html %}
 
-## 微信公众文章
+## 微信公众号文章
 
 <div class="wechat-articles-list">
 {% for article in site.data.wechat_articles %}
