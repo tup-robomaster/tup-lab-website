@@ -1122,7 +1122,7 @@ const videos = [
 ];
 
 // 渲染轮播图的核心函数（activeIdx：当前激活的封面索引，默认0）
-function renderCarousel(activeIdx = 0) {
+function renderCarousel(activeIdx = 0, prevIdx = null) {
   const root = document.getElementById('bilibili-carousel-root');
   if (!root) return; // 若根容器不存在，提前终止
 
@@ -1138,24 +1138,47 @@ function renderCarousel(activeIdx = 0) {
           let pos = i - activeIdx;
           // 根据位置设置封面项的样式类（控制显示位置和层级）
           let cls = pos === 0 ? 'center' : (pos === -1 ? 'left' : (pos === 1 ? 'right' : 'hidden'));
+          if (prevIdx !== null) {
+            if (i === prevIdx) {
+              if (activeIdx > prevIdx) {
+                cls += ' slide-out-left fade-out';
+              } else {
+                cls += ' slide-out-right fade-out';
+              }
+            } else if (i === activeIdx) {
+              if (activeIdx > prevIdx) {
+                cls += ' slide-in-left fade-in';
+              } else {
+                cls += ' slide-in-right fade-in';
+              }
+            }
+          }
           return `
-            <div class="bili-cover ${cls}" data-idx="${i}" style="z-index:${10-Math.abs(pos)};${cls==='hidden'?'display:none;':''}">
+            <div class="bili-cover ${cls}" data-idx="${i}" style="z-index:${10 - Math.abs(pos)};${cls.includes('hidden') ? 'display:none;' : ''}">
               <img src="${v.cover}" alt="cover" /> <!-- 封面图片 -->
             </div>
           `;
         }).join('')}
       </div>
       <!-- 右箭头（当前是最后一个封面时禁用） -->
-      <button class="bili-arrow right" ${activeIdx === videos.length-1 ? 'disabled' : ''}>&gt;</button>
+      <button class="bili-arrow right" ${activeIdx === videos.length - 1 ? 'disabled' : ''}>&gt;</button>
     </div>
   `;
   root.innerHTML = html; // 将生成的HTML插入根容器
 
   // 左箭头点击事件：切换到前一个封面
-  root.querySelector('.bili-arrow.left')?.addEventListener('click', () => renderCarousel(activeIdx-1));
+  root.querySelector('.bili-arrow.left')?.addEventListener('click', () => {
+    if (activeIdx > 0) {
+      renderCarousel(activeIdx - 1, activeIdx);
+    }
+  });
   // 右箭头点击事件：切换到后一个封面
-  root.querySelector('.bili-arrow.right')?.addEventListener('click', () => renderCarousel(activeIdx+1));
-  
+  root.querySelector('.bili-arrow.right')?.addEventListener('click', () => {
+    if (activeIdx < videos.length - 1) {
+      renderCarousel(activeIdx + 1, activeIdx);
+    }
+  });
+
   // 封面点击事件：若点击当前激活封面则跳转视频，否则切换到目标封面
   root.querySelectorAll('.bili-cover').forEach(div => {
     div.onclick = () => {
@@ -1163,9 +1186,9 @@ function renderCarousel(activeIdx = 0) {
       if (idx === activeIdx) {
         window.open(videos[idx].url, '_blank'); // 新窗口打开视频链接
       } else {
-        renderCarousel(idx); // 切换到目标封面
+        renderCarousel(idx, activeIdx); // 切换到目标封面
       }
-    }
+    };
   });
 }
 
@@ -1206,7 +1229,8 @@ document.addEventListener('DOMContentLoaded', () => renderCarousel(0));
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 800px; /* 与封面宽度一致 */
+  /* 动态调整宽度，留出前后视频八分之一的空间 */
+  width: calc(100vw - 96px - (100vw - 96px) / 4); 
   position: relative; /* 子元素绝对定位的参考 */
   height: 500px; /* 与封面高度一致 */
 }
@@ -1214,10 +1238,13 @@ document.addEventListener('DOMContentLoaded', () => renderCarousel(0));
 /* 单个封面项样式 */
 .bili-cover {
   position: absolute; /* 绝对定位实现层叠效果 */
-  top: 0; left: 50%;
-  transform: translateX(-50%) scale(0.7); /* 水平居中 + 初始缩放0.7倍 */
+  top: 0;
+  /* 保持 16:10 比例 */
+  aspect-ratio: 16 / 10; 
+  height: 100%;
+  transform: scale(0.7); /* 初始缩放0.7倍 */
   opacity: 0.6; /* 非激活项半透明 */
-  transition: all 0.3s cubic-bezier(.4,2,.6,1); /* 动画过渡效果 */
+  transition: all 0.5s ease-in-out; /* 增加过渡效果 */
   cursor: pointer;
   box-shadow: 0 2px 12px #0002; /* 阴影增强层次感 */
   border-radius: 10px; /* 圆角 */
@@ -1225,14 +1252,15 @@ document.addEventListener('DOMContentLoaded', () => renderCarousel(0));
 }
 .bili-cover img {
   display: block;
-  width: 800px; /* 封面宽度（16:10比例） */
-  height: 500px; /* 封面高度（16:10比例） */
+  width: 100%;
+  height: 100%;
   object-fit: cover; /* 图片覆盖容器（避免拉伸） */
   border-radius: 10px; /* 图片圆角 */
 }
 
 /* 激活状态的封面（居中显示，放大1倍） */
 .bili-cover.center {
+  left: 50%;
   transform: translateX(-50%) scale(1);
   opacity: 1; /* 完全不透明 */
   z-index: 10; /* 最高层级 */
@@ -1240,16 +1268,18 @@ document.addEventListener('DOMContentLoaded', () => renderCarousel(0));
   border: 3px solid #0795d9; /* 主题色边框 */
 }
 
-/* 左侧非激活封面（缩放0.7倍，左偏移） */
+/* 左侧非激活封面（缩放0.7倍，左偏移，露出八分之一） */
 .bili-cover.left {
-  transform: translateX(-220%) scale(0.7);
+  left: calc(12.5% - 50%);
+  transform: scale(0.7);
   opacity: 0.7; /* 比隐藏项更清晰 */
   z-index: 5; /* 中层级 */
 }
 
-/* 右侧非激活封面（缩放0.7倍，右偏移） */
+/* 右侧非激活封面（缩放0.7倍，右偏移，露出八分之一） */
 .bili-cover.right {
-  transform: translateX(120%) scale(0.7);
+  left: calc(87.5% - 50%);
+  transform: scale(0.7);
   opacity: 0.7; /* 比隐藏项更清晰 */
   z-index: 5; /* 中层级 */
 }
@@ -1260,11 +1290,83 @@ document.addEventListener('DOMContentLoaded', () => renderCarousel(0));
   pointer-events: none; /* 禁止点击 */
 }
 
+/* 平移和溶解动画关键帧 */
+@keyframes slideInLeft {
+  from {
+    left: calc(12.5% - 50%);
+    opacity: 0;
+  }
+  to {
+    left: 50%;
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    left: 50%;
+    opacity: 1;
+  }
+  to {
+    left: calc(87.5% - 50%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    left: calc(87.5% - 50%);
+    opacity: 0;
+  }
+  to {
+    left: 50%;
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    left: 50%;
+    opacity: 1;
+  }
+  to {
+    left: calc(12.5% - 50%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.bili-cover.center.slide-in-left {
+  animation: slideInLeft 0.5s ease-in-out forwards, fadeIn 0.5s ease-in-out forwards;
+}
+
+.bili-cover.center.slide-out-left {
+  animation: slideOutLeft 0.5s ease-in-out forwards, fadeOut 0.5s ease-in-out forwards;
+}
+
+.bili-cover.center.slide-in-right {
+  animation: slideInRight 0.5s ease-in-out forwards, fadeIn 0.5s ease-in-out forwards;
+}
+
+.bili-cover.center.slide-out-right {
+  animation: slideOutRight 0.5s ease-in-out forwards, fadeOut 0.5s ease-in-out forwards;
+}
+
 /* 移动端响应式调整 */
 @media (max-width: 900px) {
-  .bili-covers { width: 100vw; } /* 容器宽度占满屏幕 */
-  .bili-cover img { 
-    width: 500px; /* 缩小封面宽度 */
+  .bili-covers { 
+    width: calc(100vw - 96px - (100vw - 96px) / 4); 
+  }
+  .bili-cover {
     height: 312.5px; /* 保持16:10比例 */
   }
   .bili-arrow { 
