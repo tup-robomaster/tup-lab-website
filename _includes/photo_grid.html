@@ -1,0 +1,62 @@
+<style>
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .photo-item {
+    position: relative;
+    overflow: hidden !important; /* 确保溢出内容被隐藏 */
+    aspect-ratio: 1 / 1 !important; /* 确保每个网格项为正方形 */
+  }
+
+  .photo-item img {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .more-photos {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+</style>
+
+<div class="photo-grid">
+  {% assign displayed_photos = include.photos | slice: 0, 8 %}
+  {% assign remaining_count = include.photos.size | minus: 8 %}
+  
+  {% for photo in displayed_photos %}
+    <div class="photo-item">
+      {% include figure.html image=photo %}
+    </div>
+  {% endfor %}
+
+  {% if remaining_count > 0 %}
+    <div class="photo-item">
+      <a href="{{ '/' | append: include.album_dir | append: '/all-photos.html' | relative_url }}">
+        <div class="more-photos">
+          <span style="font-size: 2rem;">+</span>
+          <span>{{ remaining_count }} 张</span>
+        </div>
+      </a>
+    </div>
+  {% endif %}
+</div>

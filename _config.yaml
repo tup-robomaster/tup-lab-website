@@ -9,12 +9,12 @@ proofer: false
 
 # site social media and other links
 links:
-  email: 3117144922@qq.com
+  email: LcYun53188@outlook.com
   # orcid: 0000-0001-8713-9213
   # google-scholar: ETJoidYAAAAJ
-  github: Yueyuanh
-  twitter: Yueyuanh
-  youtube: Yueyuanh
+  github: None
+  twitter: None
+  youtube: None
 
 ### jekyll settings
 
@@ -72,3 +72,5 @@ exclude:
   - README.md
   - LICENSE.md
   - CITATION.cff
+
+

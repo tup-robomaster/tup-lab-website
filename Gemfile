@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source "https://gems.ruby-china.com"
 
 # jekyll
 gem "jekyll", "~> 4.3"

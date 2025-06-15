@@ -1,27 +1,22 @@
 ---
 title: Projects
 nav:
-  order: 2
-  tooltip: Software, datasets, and more
+  order: 1
+  tooltip: Published works
 ---
 
-# {% include icon.html icon="fa-solid fa-wrench" %}Projects
+# {% include icon.html icon="fa-solid fa-microscope" %}PROJECTS
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-{% include tags.html tags="publication, resource, website" %}
-
-{% include search-info.html %}
+正在开发中...
 
 {% include section.html %}
 
-## Featured
 
-{% include list.html component="card" data="projects" filter="group == 'featured'" %}
+## 微信公众文章
+
+{% include list.html data="wechat_articles" component="wechat-article" style="rich" %}
 
 {% include section.html %}
 
-## More
 
-{% include list.html component="card" data="projects" filter="!group" style="small" %}
+
