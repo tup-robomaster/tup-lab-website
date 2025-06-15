@@ -28,13 +28,13 @@
 
 {% include section.html %}
 
-## 也许你喜欢-RECOMMEND
+## TUP速递
 
 <!-- 第一行 -->
 {% capture text %}
 
-在 2024 年机甲大师超级对抗赛中，沈阳航空航天大学 TUP 战队在中部赛区比赛中表现出色，成功跻身十六强
 
+在近十年来发展过程中，TUP战队在RoboMaster的赛场上留下了很多光辉的印记，可能是令人印象深刻的自瞄、能量机关，也可能是天降正义的雷达系统，每个兵种、功能都是团队辛勤付出的**成果**！
 
 {%
   include button.html
@@ -51,7 +51,7 @@
   include feature.html
   image="images/index/10.png"
   link="projects"
-  title="成果"
+  title="战队成果"
   text=text
 %}
 
@@ -59,7 +59,9 @@
 <!-- 第二行 -->
 {% capture text %}
 
-聆听我们的成长故事，触摸梦想的炽热温度
+这仿佛是一场回味无穷的梦，关于青春，关于热爱，<br>
+关于大学，关于机器人，关于TUP，关于RoboMaster，<br>
+**关于你，关于我，关于我们**！
 
 {%
   include button.html
@@ -76,7 +78,7 @@
   include feature.html
   image="images/index/1.png"
   link="story"
-  title="成长故事"
+  title="战队故事"
   flip=true
   style="bare"
   text=text
@@ -85,8 +87,14 @@
 <!-- 第三行 -->
 {% capture text %}
 
-定格岁月的绚丽光影，珍藏时光的温暖画卷。<br>
-细览往昔的斑斓相册，品味记忆的璀璨瞬间。
+你可曾见过实验室第一发弹丸出膛，<br>
+你可曾见过实验室第一辆机器人出世，<br>
+你可曾记得深夜实验室熬夜画车，调车的日常，<br>
+你可曾记得赛场上欢呼雀跃的高光时刻，<br>
+你可能不记得备赛区挥洒的**汗水**，<br>
+但你或许曾未忘记比赛失利后的**泪水**，<br>
+那年你青涩的眼神充满了对**前人**的倾慕，<br>
+那年你深邃的目光中全是对**后人**的期冀。
 
 {%
   include button.html
@@ -110,12 +118,15 @@
 <!-- 第四行 -->
 {% capture text %}
 
-了解更多内容
+Ta说：“**初心高于胜负，成长大于输赢**”<br>
+Ta说：“**穷究原理，探寻本质**”<br>
+Ta说：“**喜欢看你坚定有神的目光**”<br>
+在RoboMaster的赛场上工程师文化正在被一群年轻有朝气的青年不断完美诠释
 
 {%
   include button.html
   link="more"
-  text="Learn More"
+  text="More about RoboMaster"
   icon="fa-solid fa-arrow-right"
   flip=true
   style="bare"
@@ -125,9 +136,9 @@
 
 {%
   include feature.html
-  image="images/index/1.png"
+  image="images/index/3.png"
   link="more"
-  title="更多内容"
+  title="了解RoboMaster"
   flip=true
   style="bare"
   text=text
@@ -137,6 +148,8 @@
 <!-- 第五行 -->
 {% capture text %}
 
+十年磨剑，一朝试锋！<br>
+TUP战队在十年发展过程中培养出了一批优秀的成员，他们都曾在那片属于RMer的热土上挥洒汗水和泪水，他们也正在走向世界各地，他们都曾是同样迷茫的你，冥冥之中的**使命感**让你来到这里，加入我们！
 
 {%
   include button.html
@@ -151,7 +164,7 @@
 
 {%
   include feature.html
-  image="images/index/cheer.png"
+  image="images/index/16.png"
   link="join"
   title="加入我们"
   text=text
