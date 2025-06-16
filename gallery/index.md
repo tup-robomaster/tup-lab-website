@@ -8,7 +8,10 @@ nav:
 # {% include icon.html icon="fa-solid fa-users" %}GALLERY
 
 ## TUP10周年特别回忆篇
-
+### 老照片
+{% assign sense_2015_pics = site.static_files | where_exp:"file", "file.path contains 'gallery/pictures/2015SENSE'" %}
+{% assign sense_2015_paths = sense_2015_pics | map: "path" %}
+{% include photo_grid.html photos=sense_2015_paths album_dir="gallery/pictures/2015SENSE" %}  
 
 
 ## 2025 年

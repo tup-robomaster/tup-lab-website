@@ -24,7 +24,7 @@
 <div class="photo-grid">
   {% assign photos = site.static_files | where_exp: "file", "file.path contains include.dir" %}
   {% for photo in photos %}
-    {% if photo.extname == ".jpg" or photo.extname == ".jpeg" or photo.extname == ".png" or photo.extname == ".gif"
+    {% if photo.extname == ".jpg" or photo.extname == ".jpeg" or photo.extname == ".png" or photo.extname == ".gif "
        or photo.extname == ".JPG" or photo.extname == ".JPEG" or photo.extname == ".PNG" or photo.extname == ".GIF" %}
       <div class="photo-item">
         <a href="{{ photo.path | relative_url }}" target="_blank">
