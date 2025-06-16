@@ -1030,7 +1030,7 @@ OQAAAABJRU5ErkJggg=="></image>
       
     
       
-        <a href="/tup-lab-website/story/" data-tooltip="Our story">
+        <a href="/tup-lab-website/story/" data-tooltip="Published works">
           Story
         </a>
       
@@ -1092,29 +1092,115 @@ OQAAAABJRU5ErkJggg=="></image>
   
 
   <section class="background" data-size="page">
-    <h1 id="story">
-<i class="icon fa-solid fa-wrench"></i>STORY</h1>
+    <h2 id="微信公众号文章">微信公众号文章</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+<div class="wechat-articles-list">
 
-<div class="tags">
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20publication%22" class="tag" data-tooltip='Show items with the tag "publication"'>
-        publication
-      </a>
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20resource%22" class="tag" data-tooltip='Show items with the tag "resource"'>
-        resource
-      </a>
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20website%22" class="tag" data-tooltip='Show items with the tag "website"'>
-        website
-      </a>
-    
-  </div>
+  <div class="wechat-article-card">
+  <a href="https://mp.weixin.qq.com/s?__biz=MzkwODAwMTk4NQ==&mid=2247484406&idx=1&sn=379a2747d75c21ce584cf49f1648f980&scene=19#wechat_redirect" target="_blank" class="wechat-article-link">
+    <img src="/tup-lab-website/story/cover/1.jpg" alt="TUP's T&amp;S | 第一期：他们无所不能" class="wechat-article-cover">
+    <div class="wechat-article-title">TUP's T&amp;S | 第一期：他们无所不能</div>
+  </a>
+  <div class="wechat-article-excerpt">新生们来实验室这么久，对实验室的归属感也还没那么强。但实际上，我们所有老队员对大家的到来和对考核的坚持都是感动并认可的。我们非常期待你们正式入队的那一天。</div>
+</div>
 
-<div class="search-info"></div>
+  <div class="wechat-article-card">
+  <a href="https://mp.weixin.qq.com/s?__biz=MzkwODAwMTk4NQ==&mid=2247484446&idx=1&sn=e36fde3e0df1da3b2cd75217014d8a00&scene=19#wechat_redirect" target="_blank" class="wechat-article-link">
+    <img src="/tup-lab-website/story/cover/2.jpg" alt="TUP's T&amp;S | 第二期：我们不是孤军奋战" class="wechat-article-cover">
+    <div class="wechat-article-title">TUP's T&amp;S | 第二期：我们不是孤军奋战</div>
+  </a>
+  <div class="wechat-article-excerpt">亲爱的机友们大家好久不见，我是你们的老朋友小黑。经过上一期对队长和副队关于实验室关于比赛也关于他们自己的详细介绍，大家是不是对我们实验室有了和初印象不同的认识呢？</div>
+</div>
+
+  <div class="wechat-article-card">
+  <a href="https://mp.weixin.qq.com/s?__biz=MzkwODAwMTk4NQ==&mid=2247484752&idx=1&sn=31d7a505b1f14113ced11ab601f32423&scene=19#wechat_redirect" target="_blank" class="wechat-article-link">
+    <img src="/tup-lab-website/story/cover/3.jpg" alt="TUP's T&amp;S | 第三期：如果我辅助特别强你能叫我辅王吗" class="wechat-article-cover">
+    <div class="wechat-article-title">TUP's T&amp;S | 第三期：如果我辅助特别强你能叫我辅王吗</div>
+  </a>
+  <div class="wechat-article-excerpt">公开处刑：工程进度倒第一！</div>
+</div>
+
+  <div class="wechat-article-card">
+  <a href="https://mp.weixin.qq.com/s?__biz=MzkwODAwMTk4NQ==&mid=2247484921&idx=1&sn=ce6daf8c4f9a18609893e9c03d7c227a&chksm=c0d1d257f7a65b4190fc6a5eae8c46b83329bfe903d2cb06208a7503078aecac9fe604b37963&cur_album_id=1616547322094469122&scene=189#wechat_redirect" target="_blank" class="wechat-article-link">
+    <img src="/tup-lab-website/story/cover/4.jpg" alt="TUP's T&amp;S | 第四期：不是所有机器人都能被称作英雄" class="wechat-article-cover">
+    <div class="wechat-article-title">TUP's T&amp;S | 第四期：不是所有机器人都能被称作英雄</div>
+  </a>
+  <div class="wechat-article-excerpt">T-UP独角兽号英雄每日采用精选牧草喂养，坚持业内高标准的原料甄选和生产工艺，致力于成为全球销量领先的独角兽品牌。</div>
+</div>
+
+</div>
+
+<style>
+:root {
+  --card-bg: #fff;
+  --card-title-color: #222;
+  --card-excerpt-color: #666;
+}
+
+[data-dark="true"] {
+  --card-bg: #23272e;
+  --card-title-color: #fff;
+  --card-excerpt-color: #ccc;
+}
+
+.wechat-articles-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+  margin: 32px 0;
+}
+
+.wechat-article-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px var(--overlay);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s;
+}
+
+.wechat-article-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.wechat-article-cover {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.wechat-article-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 12px 16px 0 16px;
+  color: var(--card-title-color);
+  transition: color 0.2s;
+}
+
+.wechat-article-link:hover .wechat-article-title {
+  color: var(--primary);
+}
+
+.wechat-article-excerpt {
+  padding: 8px 16px 16px 16px;
+  color: var(--card-excerpt-color);
+  font-size: 0.98em;
+  flex: 1;
+}
+
+@media (max-width: 700px) {
+  .wechat-articles-list {
+    gap: 20px;
+  }
+  .wechat-article-cover {
+    height: 160px;
+  }
+}
+</style>
   </section>
 
   
@@ -1127,226 +1213,6 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
   <dark></dark>
   <size></size>
 -->
-
-<h2 id="featured">Featured</h2>
-
-<div class="card" data-style="">
-  <a href="https://github.com/" aria-label="Cool Dataset" class="card-image">
-    <img src="/tup-lab-website/images/photo.jpg" alt="Cool Dataset" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
-  </a>
-
-  <div class="card-text">
-    
-      <a href="https://github.com/" class="card-title">
-        Cool Dataset
-    </a>
-    
-
-    
-      <span class="card-subtitle">a subtitle</span>
-    
-
-    
-      <p>
-        Lorem ipsum <em>dolor sit amet</em>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-      </p>
-    
-
-    
-      
-
-
-  <div class="tags" data-repo="greenelab/lab-website-template">
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20resource%22" class="tag" data-tooltip='Show items with the tag "resource"'>
-        resource
-      </a>
-    
-  </div>
-
-
-    
-  </div>
-</div>
-
-<div class="card" data-style="">
-  <a href="https://github.com/" aria-label="Cool Package" class="card-image">
-    <img src="/tup-lab-website/images/photo.jpg" alt="Cool Package" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
-  </a>
-
-  <div class="card-text">
-    
-      <a href="https://github.com/" class="card-title">
-        Cool Package
-    </a>
-    
-
-    
-      <span class="card-subtitle">a subtitle</span>
-    
-
-    
-      <p>
-        Lorem ipsum <em>dolor sit amet</em>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-      </p>
-    
-
-    
-      
-
-
-  <div class="tags" data-repo="greenelab/lab-website-template">
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20resource%22" class="tag" data-tooltip='Show items with the tag "resource"'>
-        resource
-      </a>
-    
-  </div>
-
-
-    
-  </div>
-</div>
-  </section>
-
-  
-  
-  
-
-  <section class="background" data-size="page">
-    <!--
-  <background></background>
-  <dark></dark>
-  <size></size>
--->
-
-<h2 id="more">More</h2>
-
-<div class="card" data-style="small">
-  <a href="https://github.com/" aria-label="Cool Tutorial" class="card-image">
-    <img src="/tup-lab-website/images/photo.jpg" alt="Cool Tutorial" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
-  </a>
-
-  <div class="card-text">
-    
-      <a href="https://github.com/" class="card-title">
-        Cool Tutorial
-    </a>
-    
-
-    
-      <span class="card-subtitle">a subtitle</span>
-    
-
-    
-      <p>
-        Lorem ipsum <em>dolor sit amet</em>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-      </p>
-    
-
-    
-      
-
-
-  <div class="tags" data-repo="greenelab/lab-website-template">
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20resource%22" class="tag" data-tooltip='Show items with the tag "resource"'>
-        resource
-      </a>
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20publication%22" class="tag" data-tooltip='Show items with the tag "publication"'>
-        publication
-      </a>
-    
-  </div>
-
-
-    
-  </div>
-</div>
-
-<div class="card" data-style="small">
-  <a href="https://github.com/" aria-label="Cool Web App" class="card-image">
-    <img src="/tup-lab-website/images/photo.jpg" alt="Cool Web App" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
-  </a>
-
-  <div class="card-text">
-    
-      <a href="https://github.com/" class="card-title">
-        Cool Web App
-    </a>
-    
-
-    
-      <span class="card-subtitle">a subtitle</span>
-    
-
-    
-      <p>
-        Lorem ipsum <em>dolor sit amet</em>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-      </p>
-    
-
-    
-      
-
-
-  <div class="tags" data-repo="greenelab/lab-website-template">
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20software%22" class="tag" data-tooltip='Show items with the tag "software"'>
-        software
-      </a>
-    
-  </div>
-
-
-    
-  </div>
-</div>
-
-<div class="card" data-style="small">
-  <a href="https://github.com/" aria-label="Cool Web Server" class="card-image">
-    <img src="/tup-lab-website/images/photo.jpg" alt="Cool Web Server" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
-  </a>
-
-  <div class="card-text">
-    
-      <a href="https://github.com/" class="card-title">
-        Cool Web Server
-    </a>
-    
-
-    
-      <span class="card-subtitle">a subtitle</span>
-    
-
-    
-      <p>
-        Lorem ipsum <em>dolor sit amet</em>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-      </p>
-    
-
-    
-      
-
-
-  <div class="tags" data-repo="greenelab/lab-website-template">
-    
-      <a href="/tup-lab-website/story/?search=%22tag:%20software%22" class="tag" data-tooltip='Show items with the tag "software"'>
-        software
-      </a>
-    
-  </div>
-
-
-    
-  </div>
-</div>
   </section>
 
 
