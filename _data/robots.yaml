@@ -1,0 +1,52 @@
+- id: Hero
+  name: 英雄机器人
+  cover: /projects/robots/1Hero.png
+  description: 英雄机器人可发射42mm大弹丸，可远程精准打击前哨站，在比赛中主要用于摧毁敌方建筑。
+               英雄机器人在前几个赛季主要由赵文浩学长负责设计制作，经过三个赛季的不断迭代和改进，
+               在加上徐双和岳远浩的软件设计和调试，以及我们的灵魂操作手于永泉的稳定发挥，
+               英雄机器人在2024赛季表现出了非常强的战斗力，帮助队伍过关斩将。
+  link: /projects/robots/1Hero.html
+
+- id: Engineer
+  name: 工程机器人
+  cover: /projects/robots/2Engineer.png
+  description: 工程机器人是比赛中的主要经济来源，在三个赛季中主要由刘宇皓、王二宝设计制作，
+               其主要采用龙门架加小机械臂的构型，末端吸盘采用差速驱动，这三个赛季主要由龚艳佳学姐、
+               李金珈、贾涛语不断迭代电控方案和自定义控制器，在赛场上发挥相对稳定，为队伍提供了充足的经济支持。
+  link: /robots/armbot.html
+
+- id: Infantry3
+  name: 步兵机器人(3号)
+  cover: /projects/robots/3Infantry.png
+  description: 六轴机械臂，支持精准搬运和装配任务。
+  link: /robots/armbot.html
+
+- id: Infantry4
+  name: 步兵机器人(3号)
+  cover: /projects/robots/4Infantry.png
+  description: 六轴机械臂，支持精准搬运和装配任务。
+  link: /robots/armbot.html
+
+- id: Sentyr
+  name: 哨兵机器人
+  cover: /projects/robots/5Sentry.png
+  description: 六轴机械臂，支持精准搬运和装配任务。
+  link: /robots/armbot.html
+
+- id: Uav
+  name: 空中机器人
+  cover: /projects/robots/6Uav.png
+  description: 六轴机械臂，支持精准搬运和装配任务。
+  link: /robots/armbot.html
+
+- id: Dart
+  name: 飞镖系统
+  cover: /projects/robots/7Dart.png
+  description: 六轴机械臂，支持精准搬运和装配任务。
+  link: /robots/armbot.html
+
+- id: Lidar
+  name: 雷达系统
+  cover: /projects/robots/8Lidar.png
+  description: 六轴机械臂，支持精准搬运和装配任务。
+  link: /robots/armbot.html
