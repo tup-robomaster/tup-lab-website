@@ -93,4 +93,5 @@ nav:
 {% include section.html %}
 
 
-
+## B站宣传号
+{% include bilibili_carousel_tup.html %}
