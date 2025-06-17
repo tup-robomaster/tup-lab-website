@@ -1,0 +1,179 @@
+<div class="robot-showcase">
+  {% for robot in site.data.robots %}
+    <div class="robot-section">
+      <div class="robot-image">
+        <a href="{{ robot.link }}">
+          <img src="{{ robot.cover | relative_url }}" alt="{{ robot.name }}">
+        </a>
+      </div>
+      <div class="robot-text">
+        <h2>{{ robot.name }}</h2>
+        <p>{{ robot.description }}</p>
+        <a href="{{ robot.link }}" class="robot-link">了解更多 →</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+/* 主题变量，默认亮色 */
+:root {
+  --bg-primary: #fff;
+  --text-primary: #111;
+  --text-secondary: #444;
+  --link: #007bff;
+  --link-hover: #0056b3;
+}
+
+/* 框架暗色模式类，自动切换 */
+.dark {
+  --bg-primary: #121212;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --link: #66aaff;
+  --link-hover: #5599ff;
+}
+
+/* 容器与布局 */
+.robot-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.robot-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: nowrap;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 0.8s forwards;
+}
+
+.robot-section:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+/* 图片部分 */
+.robot-image {
+  flex: 0 0 35%;
+  max-width: 35%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.robot-image img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  transform: scale(1.1);
+}
+
+.robot-image:hover,
+.robot-image:focus-within {
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.robot-image:hover img,
+.robot-image:focus-within img {
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* 文字部分 */
+.robot-text {
+  flex: 0 0 65%;
+  max-width: 65%;
+  padding-left: 20px;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: fadeInText 1s ease forwards;
+  animation-delay: 0.4s;
+}
+
+.robot-text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.robot-text p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* 链接按钮 */
+.robot-link {
+  display: inline-block;
+  font-weight: bold;
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.robot-link:hover,
+.robot-link:focus {
+  color: var(--link-hover);
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+
+/* 动画关键帧 */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .robot-section {
+    flex-direction: column !important;
+  }
+
+  .robot-image,
+  .robot-text {
+    max-width: 100%;
+    flex: 1 1 100%;
+    padding-left: 0;
+  }
+
+  .robot-image img {
+    max-height: 200px;
+  }
+
+  .robot-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .robot-text p {
+    font-size: 1rem;
+  }
+}
+</style>

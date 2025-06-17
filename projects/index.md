@@ -5,15 +5,8 @@ nav:
   tooltip: Published works
 ---
 
-# {% include icon.html icon="fa-solid fa-microscope" %}PROJECTS
+# {% include icon.html icon="fa-solid fa-star" %}TUP ALL Stars
 
-正在开发中...
-
-{% include section.html %}
-
-
-
-{% include section.html %}
-
+{% include robots.html %}
 
 
