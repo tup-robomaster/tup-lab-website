@@ -1,0 +1,50 @@
+<!-- Bilibili 视频封面网格展示 -->
+<div class="bilibili-grid" id="bilibili-grid-root">
+  {% for v in site.data.bilibili_videos_tup %}
+    <a class="bili-grid-item" href="https://www.bilibili.com/video/{{ v.bvid }}" target="_blank" title="{{ v.title | escape }}">
+      <img src="{{ '/story/bili_cover/' | append: v.bvid | append: '.jpg' | relative_url }}" alt="{{ v.title | escape }}">
+      <div class="bili-grid-title">{{ v.title }}</div>
+    </a>
+  {% endfor %}
+</div>
+
+<style>
+.bilibili-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 40px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+.bili-grid-item {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: inherit;
+}
+.bili-grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.bili-grid-item img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.bili-grid-title {
+  padding: 10px;
+  font-size: 0.95rem;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: #f8f8f8;
+  border-top: 1px solid #eee;
+}
+</style>
