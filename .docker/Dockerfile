@@ -16,6 +16,7 @@ RUN set -ex; \
     apt install -y --no-install-recommends \
         build-essential \
         libffi-dev \
+        ca-certificates \
         libgmp-dev && \
     rm -rf /var/lib/apt/lists/*; \
     \
@@ -37,8 +38,8 @@ RUN set -ex; \
 
 # === 第二阶段：安装 Python 和 Python 包 ===
 # 使用清华源替换 Debian apt 源
-RUN sed -i 's|deb.debian.org|mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list \
-    && sed -i 's|security.debian.org|mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list
+# RUN sed -i 's|deb.debian.org|mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list \
+#     && sed -i 's|security.debian.org|mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list
 
 # 安装 Python（分步执行以避免单步失败）
 RUN apt update \

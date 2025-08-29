@@ -1,7 +1,7 @@
 ---
 title: More
 nav:
-  order: 4
+  order: 5
   tooltip: More
 ---
 

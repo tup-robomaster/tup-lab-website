@@ -31,6 +31,7 @@ watchmedo auto-restart \
       --force_polling \
       --livereload \
       --trace \
+      --watch \
       --host=0.0.0.0
 
 # 监听 _data 引用源变化，自动重新生成引用

@@ -1,8 +1,9 @@
 ---
 title: Story
 nav:
-  order: 1
-  tooltip: Published works
+  order: 2
+  tooltip: Read our story
+
 ---
 
 ## 微信公众号文章
@@ -95,3 +96,11 @@ nav:
 
 ## B站宣传号
 {% include bilibili_carousel_tup.html %}
+
+
+{% include button.html
+  link="https://www.douyin.com/user/MS4wLjABAAAAo_qudO_LybuuiO1wSKpyqCSetOIM7fNmtJvshhQknIcnqyw7ccCWMQCLMLorobKb"
+  text="访问抖音"
+  icon="fa-brands fa-tiktok"
+  style="bare"
+%}
