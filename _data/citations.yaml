@@ -66,7 +66,7 @@
   - "Melissa\_A Haendel"
   - "Monica\_C Munoz-Torres"
   publisher: Nucleic Acids Research
-  date: '2024-01-05'
+  date: '2023-11-24'
   link: https://doi.org/gs6kmr
   orcid: 0000-0002-4655-3773
   plugin: orcid.py
@@ -125,7 +125,7 @@
   - Casey S. Greene
   publisher: Cold Spring Harbor Laboratory
   date: '2023-01-07'
-  link: https://doi.org/10.1101/2023.01.05.522941
+  link: https://doi.org/grmcb9
   orcid: 0000-0002-4655-3773
   plugin: orcid.py
   file: orcid.yaml
@@ -184,7 +184,7 @@
   - Casey S. Greene
   publisher: Genome Biology
   date: '2020-05-11'
-  link: https://doi.org/10.1186/s13059-020-02021-3
+  link: https://doi.org/gg2mjh
   orcid: 0000-0002-4655-3773
   plugin: orcid.py
   file: orcid.yaml
@@ -229,8 +229,8 @@
   - Vincent Rubinetti
   - Daniel S. Himmelstein
   - Casey S. Greene
-  publisher: bioRxiv
-  date: '2019-09-26'
+  publisher: Cold Spring Harbor Laboratory
+  date: '2019-03-11'
   link: https://doi.org/gfxjxf
   orcid: 0000-0002-4655-3773
   plugin: orcid.py
@@ -242,7 +242,7 @@
   - Casey S. Greene
   publisher: Computational and Structural Biotechnology Journal
   date: '2020-01-01'
-  link: https://doi.org/10.1016/j.csbj.2020.05.017
+  link: https://doi.org/gg7m48
   image: https://ars.els-cdn.com/content/image/1-s2.0-S2001037020302804-gr1.jpg
   plugin: sources.py
   file: sources.yaml
@@ -257,7 +257,7 @@
   - Bastian Greshake Tzovaras
   - Casey S Greene
   publisher: eLife
-  date: '2018-02-09'
+  date: '2018-03-01'
   link: https://doi.org/ckcj
   image: https://iiif.elifesciences.org/lax:32822%2Felife-32822-fig8-v3.tif/full/863,/0/default.webp
   plugin: sources.py
