@@ -7,6 +7,17 @@ nav:
 ---
 
 <h2 class="story-heading"><i class="fa-brands fa-weixin" style="color: #07c160;"></i> 微信公众号文章</h2>
+<div class="story-grid">
+  <a class="story-card" href="https://mp.weixin.qq.com/mp/homepage?__biz=MzkwODAwMTk4NQ==&hid=1&sn=646e27086d5836bb6cbfb369cdd08799&scene=18#wechat_redirect" target="_blank">
+    <div class="story-card-cover" style="background:#07c160; display:flex; align-items:center; justify-content:center;">
+      <i class="fa-brands fa-weixin" style="font-size:4rem; color:#fff;"></i>
+    </div>
+    <div class="story-card-content">
+      <div class="story-card-title">访问 TUP战队 微信公众号</div>
+      <div class="story-card-excerpt">关注我们的公众号，获取最新的招募动态、技术分享与赛场战报！</div>
+    </div>
+  </a>
+</div>
 
 <div class="story-grid">
 {% for article in site.data.wechat_articles %}
@@ -137,6 +148,17 @@ nav:
 
 
 <h2 class="story-heading"><i class="fa-brands fa-bilibili" style="color: #00a1d6;"></i> B站宣传号</h2>
+<div class="story-grid">
+  <a class="story-card" href="https://space.bilibili.com/286752024" target="_blank">
+    <div class="story-card-cover" style="background:#00a1d6; display:flex; align-items:center; justify-content:center;">
+      <i class="fa-brands fa-bilibili" style="font-size:4rem; color:#fff;"></i>
+    </div>
+    <div class="story-card-content">
+      <div class="story-card-title">访问 TUP战队 Bilibili 主页</div>
+      <div class="story-card-excerpt">欢迎关注我们的 B站 官方账号，查看比赛录像、技术复盘及战队宣传片！</div>
+    </div>
+  </a>
+</div>
 {% include bilibili_carousel_tup.html %}
 
 
@@ -150,6 +172,21 @@ nav:
     <div class="story-card-content">
       <div class="story-card-title">访问 TUP战队 抖音主页</div>
       <div class="story-card-excerpt">关注我们的抖音号，获取最新日常动向与精彩短视频片段！</div>
+    </div>
+  </a>
+</div>
+
+{% include section.html %}
+
+<h2 class="story-heading"><i class="fa-brands fa-github" style="color: var(--story-card-title-color);"></i> GitHub 代码仓库</h2>
+<div class="story-grid">
+  <a class="story-card" href="https://github.com/tup-robomaster" target="_blank">
+    <div class="story-card-cover" style="background:#24292e; display:flex; align-items:center; justify-content:center;">
+      <i class="fa-brands fa-github" style="font-size:4rem; color:#fff;"></i>
+    </div>
+    <div class="story-card-content">
+      <div class="story-card-title">访问 TUP Robotics GitHub</div>
+      <div class="story-card-excerpt">访问我们的开源项目，包括机器人算法、硬件设计以及各类工具库！</div>
     </div>
   </a>
 </div>
