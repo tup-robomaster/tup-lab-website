@@ -1,322 +1,143 @@
-<div id="bilibili-carousel-root"></div>
+<div class="bili-carousel-container" id="bilibili-carousel">
+  <button class="bili-arrow left" aria-label="Previous">&lt;</button>
+  
+  <div class="bili-carousel-viewport">
+    <div class="bili-covers-wrapper" id="bili-covers">
+      {% for v in site.data.bilibili_videos %}
+        <div class="bili-cover" data-idx="{{ forloop.index0 }}" title="{{ v.title | escape }}">
+          <img src="{{ '/more/video_cover/' | append: v.bvid | append: '.jpg' | relative_url }}" loading="lazy" alt="{{ v.title | escape }}">
+          <div class="bili-title">{{ v.title }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 
-<!-- 4x4 网格图，展示所有视频 -->
-<div class="bilibili-grid" id="bilibili-grid-root">
-  {% for v in site.data.bilibili_videos %}
-    <a class="bili-grid-item" href="https://www.bilibili.com/video/{{ v.bvid }}" target="_blank" title="{{ v.title | escape }}">
-      <img src="{{ '/more/video_cover/' | append: v.bvid | append: '.jpg' | relative_url }}" alt="{{ v.title | escape }}">
-      <div class="bili-grid-title">{{ v.title }}</div>
-    </a>
-  {% endfor %}
+  <button class="bili-arrow right" aria-label="Next">&gt;</button>
+  
+  <div class="bili-dots" id="bili-dots">
+    {% for v in site.data.bilibili_videos %}
+      <span class="bili-dot" data-idx="{{ forloop.index0 }}"></span>
+    {% endfor %}
+  </div>
 </div>
 
 <script>
-const videos = [
-  {% for v in site.data.bilibili_videos %}
-    {
-      bvid: "{{ v.bvid }}",
-      title: "{{ v.title | escape }}",
-      cover: "{{ '/more/video_cover/' | append: v.bvid | append: '.jpg' | relative_url }}",
-      url: "https://www.bilibili.com/video/{{ v.bvid }}"
-    }{% unless forloop.last %},{% endunless %}
-  {% endfor %}
-];
+(function() {
+  const container = document.getElementById('bilibili-carousel');
+  if (!container) return;
 
-let activeIdx = 0;
-let autoplayTimer = null;
+  const covers = container.querySelectorAll('.bili-cover');
+  const dots = container.querySelectorAll('.bili-dot');
+  const total = covers.length;
+  let currentIdx = 0;
+  let autoplayTimer = null;
 
-function renderCarousel(newIdx, prevIdx = null) {
-  const root = document.getElementById('bilibili-carousel-root');
-  if (!root) return;
-  activeIdx = newIdx;
+  const bvidMap = [
+    {% for v in site.data.bilibili_videos %}
+      "{{ v.bvid }}"{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
 
-  const direction = prevIdx !== null ? (newIdx > prevIdx || (newIdx === 0 && prevIdx === videos.length - 1) ? 'left' : 'right') : null;
+  function updateCarousel(newIdx) {
+    currentIdx = (newIdx + total) % total;
+    
+    covers.forEach((cover, i) => {
+      cover.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+      
+      let pos = i - currentIdx;
+      // Handle wrapping
+      if (pos < -Math.floor(total/2)) pos += total;
+      if (pos > Math.floor(total/2)) pos -= total;
 
-  root.innerHTML = `
-    <div class="bili-carousel">
-      <button class="bili-arrow left">&lt;</button>
-      <div class="bili-covers">
-        ${videos.map((v, i) => {
-          let pos = i - newIdx;
-          if (pos < -1) pos = videos.length + pos;
-          if (pos > 1) pos = pos - videos.length;
+      if (pos === 0) {
+        cover.classList.add('active');
+      } else if (pos === -1) {
+        cover.classList.add('prev');
+      } else if (pos === 1) {
+        cover.classList.add('next');
+      } else if (pos < -1) {
+        cover.classList.add('far-prev');
+      } else if (pos > 1) {
+        cover.classList.add('far-next');
+      }
+    });
 
-          let cls = pos === 0 ? 'center' : (pos === -1 || pos === videos.length - 1 ? 'left' : 'right');
-          if (prevIdx !== null) {
-            if (i === prevIdx) cls += ` slide-out-${direction} fade-out`;
-            if (i === newIdx) cls += ` slide-in-${direction} fade-in`;
-          }
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIdx);
+    });
+  }
 
-          return `
-            <div class="bili-cover ${cls}" data-idx="${i}" style="z-index:${10 - Math.abs(pos)};" title="${v.title}">
-              <img src="${v.cover}" loading="lazy" alt="cover">
-              <div class="bili-title">${v.title}</div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-      <button class="bili-arrow right">&gt;</button>
-    </div>
-    <div class="bili-dots">
-      ${videos.map((_, i) => `
-        <span class="bili-dot ${i === activeIdx ? 'active' : ''}" data-idx="${i}"></span>
-      `).join('')}
-    </div>
-  `;
+  // Click events
+  container.querySelector('.bili-arrow.left').onclick = () => {
+    stopAutoplay();
+    updateCarousel(currentIdx - 1);
+    startAutoplay();
+  };
+  container.querySelector('.bili-arrow.right').onclick = () => {
+    stopAutoplay();
+    updateCarousel(currentIdx + 1);
+    startAutoplay();
+  };
 
-  root.querySelector('.bili-arrow.left')?.addEventListener('click', () => {
-    renderCarousel((activeIdx - 1 + videos.length) % videos.length, activeIdx);
-  });
-
-  root.querySelector('.bili-arrow.right')?.addEventListener('click', () => {
-    renderCarousel((activeIdx + 1) % videos.length, activeIdx);
-  });
-
-  root.querySelectorAll('.bili-cover').forEach(div => {
-    div.onclick = () => {
-      const idx = parseInt(div.dataset.idx);
-      if (idx === activeIdx) {
-        window.open(videos[idx].url, '_blank');
+  covers.forEach((cover, i) => {
+    cover.onclick = () => {
+      if (i === currentIdx) {
+        window.open(`https://www.bilibili.com/video/${bvidMap[i]}`, '_blank');
       } else {
-        renderCarousel(idx, activeIdx);
+        stopAutoplay();
+        updateCarousel(i);
+        startAutoplay();
       }
     };
   });
 
-  root.querySelectorAll('.bili-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      const idx = parseInt(dot.dataset.idx);
-      if (idx !== activeIdx) {
-        renderCarousel(idx, activeIdx);
-      }
-    });
+  dots.forEach((dot, i) => {
+    dot.onclick = () => {
+      stopAutoplay();
+      updateCarousel(i);
+      startAutoplay();
+    };
   });
 
-  // 触摸滑动支持
-  const covers = root.querySelector('.bili-covers');
-  let touchStartX = null;
-  covers.addEventListener('touchstart', e => {
+  // Autoplay
+  function startAutoplay() {
+    autoplayTimer = setInterval(() => updateCarousel(currentIdx + 1), 6000);
+  }
+  function stopAutoplay() {
+    clearInterval(autoplayTimer);
+  }
+
+  // Touch Support
+  let touchStartX = 0;
+  container.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
   }, { passive: true });
-  covers.addEventListener('touchend', e => {
-    if (touchStartX === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) {
-      if (dx > 0) {
-        renderCarousel((activeIdx - 1 + videos.length) % videos.length, activeIdx);
-      } else {
-        renderCarousel((activeIdx + 1) % videos.length, activeIdx);
-      }
+
+  container.addEventListener('touchend', e => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      stopAutoplay();
+      updateCarousel(currentIdx + (diff > 0 ? 1 : -1));
+      startAutoplay();
     }
-    touchStartX = null;
-  });
-}
+  }, { passive: true });
 
-function startAutoplay() {
-  autoplayTimer = setInterval(() => {
-    renderCarousel((activeIdx + 1) % videos.length, activeIdx);
-  }, 6000);
-}
-function stopAutoplay() {
-  if (autoplayTimer) clearInterval(autoplayTimer);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderCarousel(0);
+  // Init
+  updateCarousel(0);
   startAutoplay();
+
+  // Keyboard navigation
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') renderCarousel((activeIdx - 1 + videos.length) % videos.length, activeIdx);
-    else if (e.key === 'ArrowRight') renderCarousel((activeIdx + 1) % videos.length, activeIdx);
+    if (e.key === 'ArrowLeft') {
+      stopAutoplay();
+      updateCarousel(currentIdx - 1);
+      startAutoplay();
+    } else if (e.key === 'ArrowRight') {
+      stopAutoplay();
+      updateCarousel(currentIdx + 1);
+      startAutoplay();
+    }
   });
-});
+})();
 </script>
-
-<style>
-.bili-carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  margin: 40px 0 10px;
-  user-select: none;
-}
-.bili-arrow {
-  font-size: 2rem;
-  background: none;
-  border: none;
-  color: #0795d9;
-  cursor: pointer;
-  width: 48px;
-  height: 500px;
-  opacity: 0.7;
-}
-.bili-covers {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: calc(100vw - 96px - (100vw - 96px) / 4);
-  position: relative;
-  height: 500px;
-}
-.bili-cover {
-  position: absolute;
-  top: 0;
-  aspect-ratio: 16 / 10;
-  height: 100%;
-  transform: scale(0.7);
-  opacity: 0.6;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-  box-shadow: 0 2px 12px #0002;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.bili-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-}
-.bili-cover.center {
-  left: 50%;
-  transform: translateX(-50%) scale(1);
-  opacity: 1;
-  z-index: 10;
-  box-shadow: 0 4px 24px #0004;
-  border: 3px solid #0795d9;
-}
-.bili-cover.left {
-  left: calc(12.5% - 50%);
-  transform: scale(0.7);
-  opacity: 0.7;
-}
-.bili-cover.right {
-  left: calc(87.5% - 50%);
-  transform: scale(0.7);
-  opacity: 0.7;
-}
-.bili-dots {
-  text-align: center;
-  margin-top: 8px;
-}
-.bili-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 3px;
-  background-color: #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-.bili-dot.active {
-  background-color: #0795d9;
-}
-.bili-title {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 8px 10px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-  color: #fff;
-  font-size: 0.9rem;
-  line-height: 1.2;
-  text-align: left;
-  box-sizing: border-box;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* 动画关键帧 */
-@keyframes slideInLeft {
-  from { left: calc(87.5% - 50%); opacity: 0; }
-  to { left: 50%; opacity: 1; }
-}
-@keyframes slideOutLeft {
-  from { left: 50%; opacity: 1; }
-  to { left: calc(12.5% - 50%); opacity: 0; }
-}
-@keyframes slideInRight {
-  from { left: calc(12.5% - 50%); opacity: 0; }
-  to { left: 50%; opacity: 1; }
-}
-@keyframes slideOutRight {
-  from { left: 50%; opacity: 1; }
-  to { left: calc(87.5% - 50%); opacity: 0; }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-.bili-cover.center.slide-in-left {
-  animation: slideInLeft 0.3s ease-in-out forwards, fadeIn 0.3s ease-in-out forwards;
-}
-.bili-cover.center.slide-out-left {
-  animation: slideOutLeft 0.3s ease-in-out forwards, fadeOut 0.3s ease-in-out forwards;
-}
-.bili-cover.center.slide-in-right {
-  animation: slideInRight 0.3s ease-in-out forwards, fadeIn 0.3s ease-in-out forwards;
-}
-.bili-cover.center.slide-out-right {
-  animation: slideOutRight 0.3s ease-in-out forwards, fadeOut 0.3s ease-in-out forwards;
-}
-
-@media (max-width: 900px) {
-  .bili-covers {
-    width: calc(100vw - 96px - (100vw - 96px) / 4);
-  }
-  .bili-cover {
-    height: 312.5px;
-  }
-  .bili-arrow {
-    height: 312.5px;
-  }
-}
-
-/* 4x4 网格样式 */
-.bilibili-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  margin: 40px auto;
-  max-width: 1200px;
-  padding: 0 20px;
-}
-.bili-grid-item {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  color: inherit;
-}
-.bili-grid-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-.bili-grid-item img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-.bili-grid-title {
-  padding: 10px;
-  font-size: 0.95rem;
-  color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: #f8f8f8;
-  border-top: 1px solid #eee;
-}
-</style>

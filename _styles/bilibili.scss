@@ -1,5 +1,201 @@
-.bilibili-videos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(480px, 800px));
-  gap: 20px;
+---
+---
+
+/* Bilibili Carousel and Grid Styles */
+
+:root {
+  --bili-primary: var(--primary);
+  --bili-card-bg: var(--background-alt);
+  --bili-card-text: var(--text);
+  --bili-carousel-height: 480px;
+  --bili-item-scale-side: 0.75;
+  --bili-item-opacity-side: 0.6;
+  --bili-item-overlap: 20%; /* Controls how much space side items take */
+  --bili-transition-speed: 0.6s;
+  --bili-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-dark="true"] {
+  --bili-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.bili-carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1600px;
+  margin: 60px auto 20px;
+  user-select: none;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.bili-carousel-viewport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--bili-carousel-height);
+  position: relative;
+}
+
+.bili-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  background: rgba(var(--primary-rgb), 0.1);
+  border: none;
+  color: var(--bili-primary);
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0.5;
+}
+
+.bili-arrow:hover {
+  opacity: 1;
+  background: rgba(var(--primary-rgb), 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.bili-arrow.left { left: 40px; }
+.bili-arrow.right { right: 40px; }
+
+.bili-covers-wrapper {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  perspective: 1000px;
+}
+
+.bili-cover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 80%;
+  height: 100%;
+  transform: translateX(-50%) scale(0.5);
+  opacity: 0;
+  z-index: 0;
+  transition: transform var(--bili-transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+              opacity var(--bili-transition-speed) ease,
+              z-index 0s linear calc(var(--bili-transition-speed) / 2);
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--bili-shadow);
+  pointer-events: none;
+}
+
+.bili-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.bili-cover:hover img {
+  transform: scale(1.05);
+}
+
+/* Visibility states */
+.bili-cover.active {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
+  border: 4px solid var(--bili-primary);
+}
+
+.bili-cover.prev {
+  transform: translateX(calc(-50% - var(--bili-item-overlap) * 2)) scale(var(--bili-item-scale-side));
+  opacity: var(--bili-item-opacity-side);
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.bili-cover.next {
+  transform: translateX(calc(-50% + var(--bili-item-overlap) * 2)) scale(var(--bili-item-scale-side));
+  opacity: var(--bili-item-opacity-side);
+  z-index: 5;
+  pointer-events: auto;
+}
+
+/* Hidden but ready states for smooth rotation */
+.bili-cover.far-prev {
+  transform: translateX(calc(-50% - var(--bili-item-overlap) * 3)) scale(0.5);
+  opacity: 0;
+  z-index: 1;
+}
+
+.bili-cover.far-next {
+  transform: translateX(calc(-50% + var(--bili-item-overlap) * 3)) scale(0.5);
+  opacity: 0;
+  z-index: 1;
+}
+
+.bili-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: #fff;
+  font-family: var(--heading);
+  font-size: 1.2rem;
+  font-weight: var(--bold);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 0.4s ease 0.2s;
+}
+
+.bili-cover.active .bili-title {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Dots Navigation */
+.bili-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.bili-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--light-gray);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bili-dot.active {
+  background: var(--bili-primary);
+  width: 30px;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --bili-carousel-height: 250px;
+  }
+  .bili-cover {
+    width: 90%;
+  }
+  .bili-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
 }
