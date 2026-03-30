@@ -1,31 +1,71 @@
 <style>
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 2rem;
   }
 
   .photo-item {
     position: relative;
-    overflow: hidden !important; /* 确保溢出内容被隐藏 */
-    aspect-ratio: 1 / 1 !important; /* 确保每个网格项为正方形 */
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
   }
 
+  .photo-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+
+  /* Shimmer effect for loading */
+  .photo-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* Hide shimmer once image is loaded? 
+     Actually, object-fit: cover will eventually cover it if img z-index is higher. 
+  */
   .photo-item img {
+    z-index: 2;
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 100% !important;
     height: 100% !important;
-
     object-fit: cover !important;
     display: block !important;
+    transition: transform 0.6s ease;
+  }
+
+  .photo-item:hover img {
+    transform: translate(-50%, -50%) scale(1.1);
   }
 
   .more-photos {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -36,6 +76,29 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+    z-index: 10; /* Ensure overlay is above the image (z-index: 2) */
+  }
+
+  .more-photos:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .more-photos .plus {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .more-photos .count {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 5px;
   }
 </style>
 
@@ -50,11 +113,15 @@
   {% endfor %}
 
   {% if remaining_count > 0 %}
-    <div class="photo-item">
+    <div class="photo-item more-tile">
       <a href="{{ '/' | append: include.album_dir | append: '/all-photos.html' | relative_url }}">
+        {% if include.photos[8] %}
+          <img src="{{ include.photos[8] | relative_url }}" alt="More photos" loading="lazy">
+        {% endif %}
         <div class="more-photos">
-          <span style="font-size: 2rem;">+</span>
-          <span>{{ remaining_count }} 张</span>
+          <span class="plus">+</span>
+          <span class="count">查看全部</span>
+          <span style="font-size: 0.85rem; opacity: 0.8;">(共 {{ include.photos.size }} 张)</span>
         </div>
       </a>
     </div>

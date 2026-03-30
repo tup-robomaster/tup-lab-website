@@ -1,0 +1,154 @@
+<style>
+  .gallery-side-nav {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 500; /* Way above any image hover z-index */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .gallery-side-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    /* Default: show only the dot indicator */
+    padding: 8px 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    max-width: 34px; /* Collapsed: just the dot */
+  }
+
+  .gallery-side-nav a .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gray);
+    flex-shrink: 0;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+
+  .gallery-side-nav a .nav-label {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    font-size: 0.82rem;
+    transition: opacity 0.25s ease, max-width 0.3s ease, margin 0.3s ease;
+    margin-left: 0;
+  }
+
+  /* Expand on hover */
+  .gallery-side-nav a:hover {
+    max-width: 160px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    padding: 8px 14px;
+  }
+
+  .gallery-side-nav a:hover .nav-label {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 8px;
+  }
+
+  .gallery-side-nav a:hover .nav-dot {
+    background: var(--primary);
+    transform: scale(1.2);
+  }
+
+  /* Active state: highlight current section */
+  .gallery-side-nav a.active {
+    max-width: 160px;
+    background: var(--primary);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 16px rgba(7, 149, 217, 0.35);
+    padding: 8px 14px;
+  }
+
+  .gallery-side-nav a.active .nav-label {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 8px;
+  }
+
+  .gallery-side-nav a.active .nav-dot {
+    background: white;
+  }
+
+  /* Dark mode */
+  [data-dark="true"] .gallery-side-nav a {
+    background: rgba(30, 30, 30, 0.7);
+    border-color: rgba(255,255,255,0.08);
+    color: var(--text);
+  }
+
+  [data-dark="true"] .gallery-side-nav a:hover {
+    background: rgba(40, 40, 40, 0.9);
+  }
+
+  [data-dark="true"] .gallery-side-nav a.active {
+    background: var(--primary);
+    color: white;
+  }
+
+  /* Hide on mobile (too small a screen) */
+  @media (max-width: 900px) {
+    .gallery-side-nav {
+      display: none;
+    }
+  }
+</style>
+
+<nav class="gallery-side-nav" id="gallery-side-nav">
+  <a href="#special" data-section="special"><span class="nav-dot"></span><span class="nav-label">10周年特辑</span></a>
+  <a href="#year-2025" data-section="year-2025"><span class="nav-dot"></span><span class="nav-label">2025年</span></a>
+  <a href="#year-2024" data-section="year-2024"><span class="nav-dot"></span><span class="nav-label">2024年</span></a>
+</nav>
+
+<script>
+(function() {
+  // Highlight the nav item corresponding to the current scroll position
+  function updateActiveNav() {
+    var nav = document.getElementById('gallery-side-nav');
+    if (!nav) return;
+
+    var sections = ['special', 'year-2025', 'year-2024'];
+    var scrollY = window.scrollY + 120; // offset for header
+    var current = sections[0];
+
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+        current = id;
+      }
+    });
+
+    nav.querySelectorAll('a').forEach(function(a) {
+      a.classList.toggle('active', a.dataset.section === current);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  // Run once on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateActiveNav);
+  } else {
+    updateActiveNav();
+  }
+})();
+</script>
