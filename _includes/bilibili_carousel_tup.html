@@ -2,7 +2,7 @@
 <div class="story-grid" id="bilibili-grid-root">
   {% for v in site.data.bilibili_videos_tup %}
     <a class="story-card" href="https://www.bilibili.com/video/{{ v.bvid }}" target="_blank" title="{{ v.title | escape }}">
-      <img class="story-card-cover" src="{{ '/story/bili_cover/' | append: v.bvid | append: '.jpg' | relative_url }}" alt="{{ v.title | escape }}">
+      <img class="story-card-cover" src="{{ '/story/bili_cover/' | append: v.bvid | append: '.jpg' | relative_url }}" loading="lazy" decoding="async" alt="{{ v.title | escape }}">
       <div class="story-card-content">
         <div class="story-card-title">{{ v.title | strip_html | truncate: 45, "..." }}</div>
       </div>

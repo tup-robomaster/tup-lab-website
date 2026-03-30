@@ -157,7 +157,7 @@
     <div class="photo-item more-tile">
       <a href="{{ '/' | append: include.album_dir | append: '/all-photos.html' | relative_url }}">
         {% if include.photos[13] %}
-          <img src="{{ include.photos[13] | relative_url }}" alt="More photos" loading="lazy">
+          <img src="{{ include.photos[13] | relative_url }}" alt="More photos" loading="lazy" decoding="async">
         {% endif %}
         <div class="more-photos">
           <span class="plus">+</span>

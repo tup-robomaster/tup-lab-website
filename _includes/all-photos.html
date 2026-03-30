@@ -117,7 +117,7 @@
        or photo.extname == ".JPG" or photo.extname == ".JPEG" or photo.extname == ".PNG" or photo.extname == ".GIF" %}
       <div class="photo-item">
         <a href="{{ photo.path | relative_url }}">
-          <img src="{{ photo.path | relative_url }}" alt="{{ photo.name }}" loading="lazy">
+          <img src="{{ photo.path | relative_url }}" alt="{{ photo.name }}" loading="lazy" decoding="async">
         </a>
       </div>
     {% endif %}

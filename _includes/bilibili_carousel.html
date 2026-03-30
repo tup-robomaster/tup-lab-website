@@ -5,7 +5,7 @@
     <div class="bili-covers-wrapper" id="bili-covers">
       {% for v in site.data.bilibili_videos %}
         <div class="bili-cover" data-idx="{{ forloop.index0 }}" title="{{ v.title | escape }}">
-          <img src="{{ '/more/video_cover/' | append: v.bvid | append: '.jpg' | relative_url }}" loading="lazy" alt="{{ v.title | escape }}">
+          <img src="{{ '/more/video_cover/' | append: v.bvid | append: '.jpg' | relative_url }}" loading="lazy" decoding="async" alt="{{ v.title | escape }}">
           <div class="bili-title">{{ v.title }}</div>
         </div>
       {% endfor %}
