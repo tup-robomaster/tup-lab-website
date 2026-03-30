@@ -144,8 +144,8 @@
 </style>
 
 <div class="photo-grid">
-  {% assign displayed_photos = include.photos | slice: 0, 8 %}
-  {% assign remaining_count = include.photos.size | minus: 8 %}
+  {% assign displayed_photos = include.photos | slice: 0, 13 %}
+  {% assign remaining_count = include.photos.size | minus: 13 %}
   
   {% for photo in displayed_photos %}
     <div class="photo-item">
@@ -156,8 +156,8 @@
   {% if remaining_count > 0 %}
     <div class="photo-item more-tile">
       <a href="{{ '/' | append: include.album_dir | append: '/all-photos.html' | relative_url }}">
-        {% if include.photos[8] %}
-          <img src="{{ include.photos[8] | relative_url }}" alt="More photos" loading="lazy">
+        {% if include.photos[13] %}
+          <img src="{{ include.photos[13] | relative_url }}" alt="More photos" loading="lazy">
         {% endif %}
         <div class="more-photos">
           <span class="plus">+</span>
