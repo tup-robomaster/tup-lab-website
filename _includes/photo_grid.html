@@ -1,8 +1,8 @@
 <style>
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
     margin-bottom: 2rem;
   }
 
@@ -12,13 +12,17 @@
     aspect-ratio: 1 / 1 !important;
     border-radius: 8px;
     background-color: #f0f0f0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
+  }
+
+  [data-dark="true"] .photo-item {
+    background-color: #2a2a2a;
   }
 
   .photo-item:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     z-index: 10;
   }
 
@@ -33,7 +37,7 @@
     background: linear-gradient(
       to right,
       rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.15) 50%,
       rgba(255, 255, 255, 0) 100%
     );
     animation: shimmer 2s infinite;
@@ -45,9 +49,6 @@
     100% { left: 100%; }
   }
 
-  /* Hide shimmer once image is loaded? 
-     Actually, object-fit: cover will eventually cover it if img z-index is higher. 
-  */
   .photo-item img {
     z-index: 2;
     position: absolute !important;
@@ -58,11 +59,11 @@
     height: 100% !important;
     object-fit: cover !important;
     display: block !important;
-    transition: transform 0.6s ease;
+    transition: transform 0.5s ease;
   }
 
   .photo-item:hover img {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .more-photos {
@@ -81,7 +82,7 @@
     -webkit-backdrop-filter: blur(8px);
     color: white;
     transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
-    z-index: 10; /* Ensure overlay is above the image (z-index: 2) */
+    z-index: 10;
   }
 
   .more-photos:hover {
@@ -91,14 +92,54 @@
   }
 
   .more-photos .plus {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 300;
   }
 
   .more-photos .count {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    margin-top: 5px;
+    margin-top: 4px;
+  }
+
+  /* ========== Responsive Breakpoints ========== */
+
+  /* Tablet: 4 cols */
+  @media (max-width: 900px) {
+    .photo-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .photo-item:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  /* Mobile: 3 cols */
+  @media (max-width: 560px) {
+    .photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .photo-item {
+      border-radius: 6px;
+    }
+    .photo-item:hover {
+      transform: none;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%);
+    }
+    .more-photos .plus {
+      font-size: 1.5rem;
+    }
+    .more-photos .count {
+      font-size: 0.8rem;
+    }
   }
 </style>
 
