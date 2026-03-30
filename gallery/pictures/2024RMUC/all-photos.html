@@ -127,6 +127,10 @@
   
 
   
+    <link href="/tup-lab-website/_styles/bilibili.css" rel="stylesheet">
+  
+
+  
     <link href="/tup-lab-website/_styles/body.css" rel="stylesheet">
   
 
@@ -212,6 +216,10 @@
 
   
     <link href="/tup-lab-website/_styles/image.css" rel="stylesheet">
+  
+
+  
+    <link href="/tup-lab-website/_styles/lightbox.css" rel="stylesheet">
   
 
   
@@ -308,6 +316,8 @@
   <script src="/tup-lab-website/_scripts/dark-mode.js"></script>
 
   <script src="/tup-lab-website/_scripts/fetch-tags.js"></script>
+
+  <script src="/tup-lab-website/_scripts/lightbox.js"></script>
 
   <script src="/tup-lab-website/_scripts/search.js"></script>
 
@@ -1025,320 +1035,480 @@ OQAAAABJRU5ErkJggg=="></image>
 
   <section class="background" data-size="page">
     <style>
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--primary);
+  color: white !important;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  vertical-align: middle;
+}
+
+.back-button svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  filter: brightness(1.1);
+}
+
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
   margin: 20px 0;
 }
+
 .photo-item {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px #0001;
-  background: #f8f9fa;
   position: relative;
+  overflow: hidden !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
 }
+
+[data-dark="true"] .photo-item {
+  background-color: #2a2a2a;
+}
+
+.photo-item:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
 .photo-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.5s ease;
+}
+
+.photo-item:hover img {
+  transform: scale(1.08);
+}
+
+/* Tablet: 4 cols */
+@media (max-width: 900px) {
+  .photo-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .photo-item:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+  .photo-item:hover img {
+    transform: scale(1.05);
+  }
+}
+
+/* Mobile: 3 cols */
+@media (max-width: 560px) {
+  .photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .photo-item {
+    border-radius: 6px;
+  }
+  .photo-item:hover {
+    transform: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+  }
+  .photo-item:hover img {
+    transform: none;
+  }
+  .back-button {
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    margin-bottom: 20px;
+  }
 }
 </style>
+
+<p><a href="/tup-lab-website/gallery/" class="back-button"><svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> 返回画廊</a></p>
 
 <div class="photo-grid">
   
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/0340da316a92d698faa84bc7f0cf983f.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/0340da316a92d698faa84bc7f0cf983f.jpg" alt="0340da316a92d698faa84bc7f0cf983f.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/0340da316a92d698faa84bc7f0cf983f.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/0340da316a92d698faa84bc7f0cf983f.jpg" alt="0340da316a92d698faa84bc7f0cf983f.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/094211888a475a67a9dbdd4ee091e40a.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/094211888a475a67a9dbdd4ee091e40a.jpg" alt="094211888a475a67a9dbdd4ee091e40a.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/094211888a475a67a9dbdd4ee091e40a.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/094211888a475a67a9dbdd4ee091e40a.jpg" alt="094211888a475a67a9dbdd4ee091e40a.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/1.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/1.png" alt="1.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/1.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/1.png" alt="1.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/10.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/10.png" alt="10.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/10.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/10.png" alt="10.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/11.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/11.png" alt="11.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/11.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/11.png" alt="11.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/12.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/12.png" alt="12.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/12.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/12.png" alt="12.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/13.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/13.png" alt="13.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/13.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/13.png" alt="13.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/14.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/14.png" alt="14.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/14.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/14.png" alt="14.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16.png" alt="16.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16.png" alt="16.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16b71c8386240ffdb5486f3432031819.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16b71c8386240ffdb5486f3432031819.jpg" alt="16b71c8386240ffdb5486f3432031819.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16b71c8386240ffdb5486f3432031819.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16b71c8386240ffdb5486f3432031819.jpg" alt="16b71c8386240ffdb5486f3432031819.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/18bae24f4171c805d4fe7340aca4383d.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/18bae24f4171c805d4fe7340aca4383d.jpg" alt="18bae24f4171c805d4fe7340aca4383d.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/18bae24f4171c805d4fe7340aca4383d.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/18bae24f4171c805d4fe7340aca4383d.jpg" alt="18bae24f4171c805d4fe7340aca4383d.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/2.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/2.png" alt="2.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/2.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/2.png" alt="2.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3.png" alt="3.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3.png" alt="3.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3e2f5b381f0142966a5b463f1dbf87b6.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3e2f5b381f0142966a5b463f1dbf87b6.jpg" alt="3e2f5b381f0142966a5b463f1dbf87b6.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3e2f5b381f0142966a5b463f1dbf87b6.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3e2f5b381f0142966a5b463f1dbf87b6.jpg" alt="3e2f5b381f0142966a5b463f1dbf87b6.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/4.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/4.png" alt="4.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/4.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/4.png" alt="4.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/43ed33a87fe4c89835d98b88e424cb26.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/43ed33a87fe4c89835d98b88e424cb26.jpg" alt="43ed33a87fe4c89835d98b88e424cb26.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/43ed33a87fe4c89835d98b88e424cb26.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/43ed33a87fe4c89835d98b88e424cb26.jpg" alt="43ed33a87fe4c89835d98b88e424cb26.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5.png" alt="5.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5.png" alt="5.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/566db669487c73313271f10beaedac85.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/566db669487c73313271f10beaedac85.jpg" alt="566db669487c73313271f10beaedac85.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/566db669487c73313271f10beaedac85.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/566db669487c73313271f10beaedac85.jpg" alt="566db669487c73313271f10beaedac85.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5c2bf875ec20052668e1213cc070eff4.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5c2bf875ec20052668e1213cc070eff4.jpg" alt="5c2bf875ec20052668e1213cc070eff4.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5c2bf875ec20052668e1213cc070eff4.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5c2bf875ec20052668e1213cc070eff4.jpg" alt="5c2bf875ec20052668e1213cc070eff4.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5e21a20324f6fc2523b269406e9ce44d.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5e21a20324f6fc2523b269406e9ce44d.jpg" alt="5e21a20324f6fc2523b269406e9ce44d.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5e21a20324f6fc2523b269406e9ce44d.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/5e21a20324f6fc2523b269406e9ce44d.jpg" alt="5e21a20324f6fc2523b269406e9ce44d.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6.png" alt="6.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6.png" alt="6.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/63e1fc3c7c81df69d7411868bee5569d.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/63e1fc3c7c81df69d7411868bee5569d.jpg" alt="63e1fc3c7c81df69d7411868bee5569d.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/63e1fc3c7c81df69d7411868bee5569d.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/63e1fc3c7c81df69d7411868bee5569d.jpg" alt="63e1fc3c7c81df69d7411868bee5569d.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6c7e2e05575dd42f80bf629cddc0ca8b.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6c7e2e05575dd42f80bf629cddc0ca8b.jpg" alt="6c7e2e05575dd42f80bf629cddc0ca8b.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6c7e2e05575dd42f80bf629cddc0ca8b.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6c7e2e05575dd42f80bf629cddc0ca8b.jpg" alt="6c7e2e05575dd42f80bf629cddc0ca8b.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6e07b2280db59c86baabba68e73f86cc.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6e07b2280db59c86baabba68e73f86cc.jpg" alt="6e07b2280db59c86baabba68e73f86cc.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6e07b2280db59c86baabba68e73f86cc.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6e07b2280db59c86baabba68e73f86cc.jpg" alt="6e07b2280db59c86baabba68e73f86cc.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6f038a9589daa9b80b241440a34eb14b.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6f038a9589daa9b80b241440a34eb14b.jpg" alt="6f038a9589daa9b80b241440a34eb14b.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6f038a9589daa9b80b241440a34eb14b.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/6f038a9589daa9b80b241440a34eb14b.jpg" alt="6f038a9589daa9b80b241440a34eb14b.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/7.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/7.png" alt="7.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/7.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/7.png" alt="7.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/725f08a14a98465c27452eb42c5f995c.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/725f08a14a98465c27452eb42c5f995c.jpg" alt="725f08a14a98465c27452eb42c5f995c.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/725f08a14a98465c27452eb42c5f995c.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/725f08a14a98465c27452eb42c5f995c.jpg" alt="725f08a14a98465c27452eb42c5f995c.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/75e619503119e6eb7a2774f1a9351391.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/75e619503119e6eb7a2774f1a9351391.jpg" alt="75e619503119e6eb7a2774f1a9351391.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/75e619503119e6eb7a2774f1a9351391.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/75e619503119e6eb7a2774f1a9351391.jpg" alt="75e619503119e6eb7a2774f1a9351391.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/8.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/8.png" alt="8.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/8.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/8.png" alt="8.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/85e7ebbec264175845dd0395924d4646.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/85e7ebbec264175845dd0395924d4646.jpg" alt="85e7ebbec264175845dd0395924d4646.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/85e7ebbec264175845dd0395924d4646.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/85e7ebbec264175845dd0395924d4646.jpg" alt="85e7ebbec264175845dd0395924d4646.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/9.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/9.png" alt="9.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/9.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/9.png" alt="9.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/ab26dacada96cb9ebeff6514b1849609.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/ab26dacada96cb9ebeff6514b1849609.jpg" alt="ab26dacada96cb9ebeff6514b1849609.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/ab26dacada96cb9ebeff6514b1849609.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/ab26dacada96cb9ebeff6514b1849609.jpg" alt="ab26dacada96cb9ebeff6514b1849609.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/af98a7c816610ca7932b13cde76d9b9b.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/af98a7c816610ca7932b13cde76d9b9b.jpg" alt="af98a7c816610ca7932b13cde76d9b9b.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/af98a7c816610ca7932b13cde76d9b9b.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/af98a7c816610ca7932b13cde76d9b9b.jpg" alt="af98a7c816610ca7932b13cde76d9b9b.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/c7a9ab6b65bdbbade5dc3649c3eeb45c.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/c7a9ab6b65bdbbade5dc3649c3eeb45c.jpg" alt="c7a9ab6b65bdbbade5dc3649c3eeb45c.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/c7a9ab6b65bdbbade5dc3649c3eeb45c.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/c7a9ab6b65bdbbade5dc3649c3eeb45c.jpg" alt="c7a9ab6b65bdbbade5dc3649c3eeb45c.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/cheer.png" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/cheer.png" alt="cheer.png">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/cheer.png">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/cheer.png" alt="cheer.png" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/fa67cee2e13346261ce3df2d95a187cb.jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/fa67cee2e13346261ce3df2d95a187cb.jpg" alt="fa67cee2e13346261ce3df2d95a187cb.jpg">
+        <a href="/tup-lab-website/gallery/pictures/2024RMUC/pictures/fa67cee2e13346261ce3df2d95a187cb.jpg">
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/fa67cee2e13346261ce3df2d95a187cb.jpg" alt="fa67cee2e13346261ce3df2d95a187cb.jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
 </div>
+
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  #back-to-top.visible {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+  }
+
+  #back-to-top svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 768px) {
+    #back-to-top {
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<div id="back-to-top" title="Back to Top">
+  <svg viewbox="0 0 24 24">
+    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+  </svg>
+</div>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-to-top');
+    if (window.scrollY > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
+
+  document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
   </section>
 
 
@@ -1418,7 +1588,7 @@ OQAAAABJRU5ErkJggg=="></image>
   </div>
 
   <div>
-    © 2025
+    © 2026
     TUP Lab Website
       |   Built with
     <a href="https://github.com/greenelab/lab-website-template">

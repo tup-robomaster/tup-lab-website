@@ -127,6 +127,10 @@
   
 
   
+    <link href="/tup-lab-website/_styles/bilibili.css" rel="stylesheet">
+  
+
+  
     <link href="/tup-lab-website/_styles/body.css" rel="stylesheet">
   
 
@@ -212,6 +216,10 @@
 
   
     <link href="/tup-lab-website/_styles/image.css" rel="stylesheet">
+  
+
+  
+    <link href="/tup-lab-website/_styles/lightbox.css" rel="stylesheet">
   
 
   
@@ -340,6 +348,8 @@
 
   
 
+  
+
 
 <!-- include all css in styles folder -->
 
@@ -358,6 +368,8 @@
   <script src="/tup-lab-website/_scripts/dark-mode.js"></script>
 
   <script src="/tup-lab-website/_scripts/fetch-tags.js"></script>
+
+  <script src="/tup-lab-website/_scripts/lightbox.js"></script>
 
   <script src="/tup-lab-website/_scripts/search.js"></script>
 
@@ -1077,37 +1089,233 @@ OQAAAABJRU5ErkJggg=="></image>
     <h1 id="gallery">
 <i class="icon fa-solid fa-users"></i>GALLERY</h1>
 
-<h2 id="tup10周年特别回忆篇">TUP10周年特别回忆篇</h2>
+<style>
+  .gallery-side-nav {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 500; /* Way above any image hover z-index */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .gallery-side-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    /* Default: show only the dot indicator */
+    padding: 8px 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    max-width: 34px; /* Collapsed: just the dot */
+  }
+
+  .gallery-side-nav a .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gray);
+    flex-shrink: 0;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+
+  .gallery-side-nav a .nav-label {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    font-size: 0.82rem;
+    transition: opacity 0.25s ease, max-width 0.3s ease, margin 0.3s ease;
+    margin-left: 0;
+  }
+
+  /* Expand on hover */
+  .gallery-side-nav a:hover {
+    max-width: 160px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    padding: 8px 14px;
+  }
+
+  .gallery-side-nav a:hover .nav-label {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 8px;
+  }
+
+  .gallery-side-nav a:hover .nav-dot {
+    background: var(--primary);
+    transform: scale(1.2);
+  }
+
+  /* Active state: highlight current section */
+  .gallery-side-nav a.active {
+    max-width: 160px;
+    background: var(--primary);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 16px rgba(7, 149, 217, 0.35);
+    padding: 8px 14px;
+  }
+
+  .gallery-side-nav a.active .nav-label {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 8px;
+  }
+
+  .gallery-side-nav a.active .nav-dot {
+    background: white;
+  }
+
+  /* Dark mode */
+  [data-dark="true"] .gallery-side-nav a {
+    background: rgba(30, 30, 30, 0.7);
+    border-color: rgba(255,255,255,0.08);
+    color: var(--text);
+  }
+
+  [data-dark="true"] .gallery-side-nav a:hover {
+    background: rgba(40, 40, 40, 0.9);
+  }
+
+  [data-dark="true"] .gallery-side-nav a.active {
+    background: var(--primary);
+    color: white;
+  }
+
+  /* Hide on mobile (too small a screen) */
+  @media (max-width: 900px) {
+    .gallery-side-nav {
+      display: none;
+    }
+  }
+</style>
+
+<nav class="gallery-side-nav" id="gallery-side-nav">
+  <a href="#special" data-section="special"><span class="nav-dot"></span><span class="nav-label">10周年特辑</span></a>
+  <a href="#year-2025" data-section="year-2025"><span class="nav-dot"></span><span class="nav-label">2025年</span></a>
+  <a href="#year-2024" data-section="year-2024"><span class="nav-dot"></span><span class="nav-label">2024年</span></a>
+</nav>
+
+<script>
+(function() {
+  // Highlight the nav item corresponding to the current scroll position
+  function updateActiveNav() {
+    var nav = document.getElementById('gallery-side-nav');
+    if (!nav) return;
+
+    var sections = ['special', 'year-2025', 'year-2024'];
+    var scrollY = window.scrollY + 120; // offset for header
+    var current = sections[0];
+
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+        current = id;
+      }
+    });
+
+    nav.querySelectorAll('a').forEach(function(a) {
+      a.classList.toggle('active', a.dataset.section === current);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  // Run once on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateActiveNav);
+  } else {
+    updateActiveNav();
+  }
+})();
+</script>
+
+<h2 id="special">TUP10周年特别回忆篇</h2>
 <h3 id="老照片">老照片</h3>
 
 <style>
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
+    margin-bottom: 2rem;
   }
 
   .photo-item {
     position: relative;
-    overflow: hidden !important; /* 确保溢出内容被隐藏 */
-    aspect-ratio: 1 / 1 !important; /* 确保每个网格项为正方形 */
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
+  }
+
+  [data-dark="true"] .photo-item {
+    background-color: #2a2a2a;
+  }
+
+  .photo-item:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+
+  /* Shimmer effect for loading */
+  .photo-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
   }
 
   .photo-item img {
+    z-index: 2;
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 100% !important;
     height: 100% !important;
-
     object-fit: cover !important;
     display: block !important;
+    transition: transform 0.5s ease;
+  }
+
+  .photo-item:hover img {
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .more-photos {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -1118,6 +1326,69 @@ OQAAAABJRU5ErkJggg=="></image>
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+    z-index: 10;
+  }
+
+  .more-photos:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .more-photos .plus {
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  .more-photos .count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* ========== Responsive Breakpoints ========== */
+
+  /* Tablet: 4 cols */
+  @media (max-width: 900px) {
+    .photo-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .photo-item:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  /* Mobile: 3 cols */
+  @media (max-width: 560px) {
+    .photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .photo-item {
+      border-radius: 6px;
+    }
+    .photo-item:hover {
+      transform: none;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%);
+    }
+    .more-photos .plus {
+      font-size: 1.5rem;
+    }
+    .more-photos .count {
+      font-size: 0.8rem;
+    }
   }
 </style>
 
@@ -1132,7 +1403,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(1).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1145,7 +1416,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(10).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1158,7 +1429,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(11).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1171,7 +1442,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(12).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1184,7 +1455,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(13).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1197,7 +1468,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(14).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1210,7 +1481,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(15).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1223,7 +1494,72 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(16).jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(17).jpg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(18).jpg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(19).jpg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(2).jpg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(20).jpg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1232,48 +1568,93 @@ OQAAAABJRU5ErkJggg=="></image>
   
 
   
-    <div class="photo-item">
+    <div class="photo-item more-tile">
       <a href="/tup-lab-website/gallery/pictures/2015SENSE/all-photos.html">
+        
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(21).jpg" alt="More photos" loading="lazy" decoding="async">
+        
         <div class="more-photos">
-          <span style="font-size: 2rem;">+</span>
-          <span>41 张</span>
+          <span class="plus">+</span>
+          <span class="count">查看全部</span>
+          <span style="font-size: 0.85rem; opacity: 0.8;">(共 49 张)</span>
         </div>
       </a>
     </div>
   
 </div>
 
-<h2 id="2025-年">2025 年</h2>
-<h3 id="2025-超级对抗赛-中部赛区">2025 超级对抗赛 中部赛区</h3>
+<h2 id="year-2025">2025 年</h2>
+<h3 id="2025rmuc">2025 超级对抗赛 中部赛区</h3>
 
 <style>
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
+    margin-bottom: 2rem;
   }
 
   .photo-item {
     position: relative;
-    overflow: hidden !important; /* 确保溢出内容被隐藏 */
-    aspect-ratio: 1 / 1 !important; /* 确保每个网格项为正方形 */
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
+  }
+
+  [data-dark="true"] .photo-item {
+    background-color: #2a2a2a;
+  }
+
+  .photo-item:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+
+  /* Shimmer effect for loading */
+  .photo-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
   }
 
   .photo-item img {
+    z-index: 2;
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 100% !important;
     height: 100% !important;
-
     object-fit: cover !important;
     display: block !important;
+    transition: transform 0.5s ease;
+  }
+
+  .photo-item:hover img {
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .more-photos {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -1284,6 +1665,69 @@ OQAAAABJRU5ErkJggg=="></image>
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+    z-index: 10;
+  }
+
+  .more-photos:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .more-photos .plus {
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  .more-photos .count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* ========== Responsive Breakpoints ========== */
+
+  /* Tablet: 4 cols */
+  @media (max-width: 900px) {
+    .photo-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .photo-item:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  /* Mobile: 3 cols */
+  @media (max-width: 560px) {
+    .photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .photo-item {
+      border-radius: 6px;
+    }
+    .photo-item:hover {
+      transform: none;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%);
+    }
+    .more-photos .plus {
+      font-size: 1.5rem;
+    }
+    .more-photos .count {
+      font-size: 0.8rem;
+    }
   }
 </style>
 
@@ -1298,7 +1742,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/13ad2f9837a411fb08fd7cb85c970370.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1311,7 +1755,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/1a9b9e36f58e36d523cd01050b7edffd.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1324,7 +1768,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/2aa4c4651df337438ded13a770c8e01c.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1337,7 +1781,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/4ff8d0060aac841722d8504e96c52203.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1350,7 +1794,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/549103ab30c1179c7148e20585c3acf3.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1363,7 +1807,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/6347910baf5f578a6998d3a5fdfa3450.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1376,7 +1820,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/754ff42fe6eb39c5b0c993115670284a.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1389,7 +1833,72 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/88e377812d2cd7a0ade4f5c41e22fe10.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/91aa624364dbd99377787026ead79e62.jpeg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/9ae08e799cc9c7596ed99a136c89925a.jpeg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/b6b39e37cd7196fab1dc9a6486f8607e.jpeg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/b83efa8ac344ac61a32c2926aacf1d4d.jpeg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/b8837724b7136ee3d8bbac3643124c09.jpeg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1398,11 +1907,15 @@ OQAAAABJRU5ErkJggg=="></image>
   
 
   
-    <div class="photo-item">
+    <div class="photo-item more-tile">
       <a href="/tup-lab-website/gallery/pictures/2025RMUC/all-photos.html">
+        
+          <img src="/tup-lab-website/gallery/pictures/2025RMUC/pictures/c34bcd0591fc8c172b40163d41b82efe.jpeg" alt="More photos" loading="lazy" decoding="async">
+        
         <div class="more-photos">
-          <span style="font-size: 2rem;">+</span>
-          <span>9 张</span>
+          <span class="plus">+</span>
+          <span class="count">查看全部</span>
+          <span style="font-size: 0.85rem; opacity: 0.8;">(共 17 张)</span>
         </div>
       </a>
     </div>
@@ -1411,36 +1924,77 @@ OQAAAABJRU5ErkJggg=="></image>
 
 <!-- 参数合并到同一行 -->
 
-<h3 id="2025-高校联盟赛-辽宁站">2025 高校联盟赛 辽宁站</h3>
+<h3 id="2025rmul">2025 高校联盟赛 辽宁站</h3>
 
 <style>
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
+    margin-bottom: 2rem;
   }
 
   .photo-item {
     position: relative;
-    overflow: hidden !important; /* 确保溢出内容被隐藏 */
-    aspect-ratio: 1 / 1 !important; /* 确保每个网格项为正方形 */
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
+  }
+
+  [data-dark="true"] .photo-item {
+    background-color: #2a2a2a;
+  }
+
+  .photo-item:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+
+  /* Shimmer effect for loading */
+  .photo-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
   }
 
   .photo-item img {
+    z-index: 2;
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 100% !important;
     height: 100% !important;
-
     object-fit: cover !important;
     display: block !important;
+    transition: transform 0.5s ease;
+  }
+
+  .photo-item:hover img {
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .more-photos {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -1451,6 +2005,69 @@ OQAAAABJRU5ErkJggg=="></image>
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+    z-index: 10;
+  }
+
+  .more-photos:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .more-photos .plus {
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  .more-photos .count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* ========== Responsive Breakpoints ========== */
+
+  /* Tablet: 4 cols */
+  @media (max-width: 900px) {
+    .photo-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .photo-item:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  /* Mobile: 3 cols */
+  @media (max-width: 560px) {
+    .photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .photo-item {
+      border-radius: 6px;
+    }
+    .photo-item:hover {
+      transform: none;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%);
+    }
+    .more-photos .plus {
+      font-size: 1.5rem;
+    }
+    .more-photos .count {
+      font-size: 0.8rem;
+    }
   }
 </style>
 
@@ -1465,7 +2082,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUL/pictures/0126e02ce690a9ef00c59f522ef1492e.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1478,7 +2095,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUL/pictures/2da1e50a45b551e40dccb320630c27c6.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1491,7 +2108,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUL/pictures/4afb241fc3b5937908a788e574f6685d.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1504,7 +2121,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2025RMUL/pictures/7007ae0fdb7d82af15c860cff38fcb53.jpeg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1517,37 +2134,78 @@ OQAAAABJRU5ErkJggg=="></image>
 
 <!-- 参数合并到同一行 -->
 
-<h2 id="2024-年">2024 年</h2>
-<h3 id="2024-超级对抗赛-中部赛区">2024 超级对抗赛 中部赛区</h3>
+<h2 id="year-2024">2024 年</h2>
+<h3 id="2024rmuc">2024 超级对抗赛 中部赛区</h3>
 
 <style>
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
+    margin-bottom: 2rem;
   }
 
   .photo-item {
     position: relative;
-    overflow: hidden !important; /* 确保溢出内容被隐藏 */
-    aspect-ratio: 1 / 1 !important; /* 确保每个网格项为正方形 */
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
+  }
+
+  [data-dark="true"] .photo-item {
+    background-color: #2a2a2a;
+  }
+
+  .photo-item:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+
+  /* Shimmer effect for loading */
+  .photo-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
   }
 
   .photo-item img {
+    z-index: 2;
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 100% !important;
     height: 100% !important;
-
     object-fit: cover !important;
     display: block !important;
+    transition: transform 0.5s ease;
+  }
+
+  .photo-item:hover img {
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .more-photos {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -1558,6 +2216,69 @@ OQAAAABJRU5ErkJggg=="></image>
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+    z-index: 10;
+  }
+
+  .more-photos:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .more-photos .plus {
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  .more-photos .count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* ========== Responsive Breakpoints ========== */
+
+  /* Tablet: 4 cols */
+  @media (max-width: 900px) {
+    .photo-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .photo-item:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  /* Mobile: 3 cols */
+  @media (max-width: 560px) {
+    .photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .photo-item {
+      border-radius: 6px;
+    }
+    .photo-item:hover {
+      transform: none;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%);
+    }
+    .more-photos .plus {
+      font-size: 1.5rem;
+    }
+    .more-photos .count {
+      font-size: 0.8rem;
+    }
   }
 </style>
 
@@ -1572,7 +2293,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/0340da316a92d698faa84bc7f0cf983f.jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1585,7 +2306,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/094211888a475a67a9dbdd4ee091e40a.jpg" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1598,7 +2319,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/1.png" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1611,7 +2332,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/10.png" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1624,7 +2345,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/11.png" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1637,7 +2358,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/12.png" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1650,7 +2371,7 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/13.png" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1663,7 +2384,72 @@ OQAAAABJRU5ErkJggg=="></image>
     <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/14.png" style="
         width: auto;
         max-height: unset;
-      " alt="figure image" loading="lazy" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16.png" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/16b71c8386240ffdb5486f3432031819.jpg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/18bae24f4171c805d4fe7340aca4383d.jpg" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/2.png" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
+  </a>
+  
+</figure>
+
+    </div>
+  
+    <div class="photo-item">
+      <figure class="figure">
+  <a class="figure-image" aria-label="figure link">
+    <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3.png" style="
+        width: auto;
+        max-height: unset;
+      " alt="figure image" loading="lazy" decoding="async" onerror="this.src = '/tup-lab-website/images/fallback.svg'; this.onerror = null;">
   </a>
   
 </figure>
@@ -1672,49 +2458,164 @@ OQAAAABJRU5ErkJggg=="></image>
   
 
   
-    <div class="photo-item">
+    <div class="photo-item more-tile">
       <a href="/tup-lab-website/gallery/pictures/2024RMUC/all-photos.html">
+        
+          <img src="/tup-lab-website/gallery/pictures/2024RMUC/pictures/3e2f5b381f0142966a5b463f1dbf87b6.jpg" alt="More photos" loading="lazy" decoding="async">
+        
         <div class="more-photos">
-          <span style="font-size: 2rem;">+</span>
-          <span>28 张</span>
+          <span class="plus">+</span>
+          <span class="count">查看全部</span>
+          <span style="font-size: 0.85rem; opacity: 0.8;">(共 36 张)</span>
         </div>
       </a>
     </div>
   
 </div>
 
-<p><!-- 参数合并到同一行 --></p>
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0.5);
+  }
 
-<h3 id="2024-高校联盟赛-辽宁站">2024 高校联盟赛 辽宁站</h3>
+  #back-to-top.visible {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+  }
+
+  #back-to-top svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 768px) {
+    #back-to-top {
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<div id="back-to-top" title="Back to Top">
+  <svg viewbox="0 0 24 24">
+    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+  </svg>
+</div>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-to-top');
+    if (window.scrollY > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
+
+  document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
+
+<h3 id="2024rmul">2024 高校联盟赛 辽宁站</h3>
 
 <style>
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
+    margin-bottom: 2rem;
   }
 
   .photo-item {
     position: relative;
-    overflow: hidden !important; /* 确保溢出内容被隐藏 */
-    aspect-ratio: 1 / 1 !important; /* 确保每个网格项为正方形 */
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
+  }
+
+  [data-dark="true"] .photo-item {
+    background-color: #2a2a2a;
+  }
+
+  .photo-item:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+
+  /* Shimmer effect for loading */
+  .photo-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
   }
 
   .photo-item img {
+    z-index: 2;
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 100% !important;
     height: 100% !important;
-
     object-fit: cover !important;
     display: block !important;
+    transition: transform 0.5s ease;
+  }
+
+  .photo-item:hover img {
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .more-photos {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -1725,6 +2626,69 @@ OQAAAABJRU5ErkJggg=="></image>
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+    z-index: 10;
+  }
+
+  .more-photos:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .more-photos .plus {
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  .more-photos .count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* ========== Responsive Breakpoints ========== */
+
+  /* Tablet: 4 cols */
+  @media (max-width: 900px) {
+    .photo-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .photo-item:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  /* Mobile: 3 cols */
+  @media (max-width: 560px) {
+    .photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .photo-item {
+      border-radius: 6px;
+    }
+    .photo-item:hover {
+      transform: none;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    }
+    .photo-item:hover img {
+      transform: translate(-50%, -50%);
+    }
+    .more-photos .plus {
+      font-size: 1.5rem;
+    }
+    .more-photos .count {
+      font-size: 0.8rem;
+    }
   }
 </style>
 
@@ -1738,6 +2702,77 @@ OQAAAABJRU5ErkJggg=="></image>
 </div>
 
 <p><!-- 参数合并到同一行 --></p>
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  #back-to-top.visible {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+  }
+
+  #back-to-top svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 768px) {
+    #back-to-top {
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<div id="back-to-top" title="Back to Top">
+  <svg viewbox="0 0 24 24">
+    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+  </svg>
+</div>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-to-top');
+    if (window.scrollY > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
+
+  document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
   </section>
 
 
@@ -1817,7 +2852,7 @@ OQAAAABJRU5ErkJggg=="></image>
   </div>
 
   <div>
-    © 2025
+    © 2026
     TUP Lab Website
       |   Built with
     <a href="https://github.com/greenelab/lab-website-template">

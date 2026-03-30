@@ -127,6 +127,10 @@
   
 
   
+    <link href="/tup-lab-website/_styles/bilibili.css" rel="stylesheet">
+  
+
+  
     <link href="/tup-lab-website/_styles/body.css" rel="stylesheet">
   
 
@@ -212,6 +216,10 @@
 
   
     <link href="/tup-lab-website/_styles/image.css" rel="stylesheet">
+  
+
+  
+    <link href="/tup-lab-website/_styles/lightbox.css" rel="stylesheet">
   
 
   
@@ -308,6 +316,8 @@
   <script src="/tup-lab-website/_scripts/dark-mode.js"></script>
 
   <script src="/tup-lab-website/_scripts/fetch-tags.js"></script>
+
+  <script src="/tup-lab-website/_scripts/lightbox.js"></script>
 
   <script src="/tup-lab-website/_scripts/search.js"></script>
 
@@ -1025,320 +1035,480 @@ OQAAAABJRU5ErkJggg=="></image>
 
   <section class="background" data-size="page">
     <style>
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--primary);
+  color: white !important;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  vertical-align: middle;
+}
+
+.back-button svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  filter: brightness(1.1);
+}
+
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
   margin: 20px 0;
 }
+
 .photo-item {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px #0001;
-  background: #f8f9fa;
   position: relative;
+  overflow: hidden !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
 }
+
+[data-dark="true"] .photo-item {
+  background-color: #2a2a2a;
+}
+
+.photo-item:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
 .photo-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.5s ease;
+}
+
+.photo-item:hover img {
+  transform: scale(1.08);
+}
+
+/* Tablet: 4 cols */
+@media (max-width: 900px) {
+  .photo-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .photo-item:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+  .photo-item:hover img {
+    transform: scale(1.05);
+  }
+}
+
+/* Mobile: 3 cols */
+@media (max-width: 560px) {
+  .photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .photo-item {
+    border-radius: 6px;
+  }
+  .photo-item:hover {
+    transform: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+  }
+  .photo-item:hover img {
+    transform: none;
+  }
+  .back-button {
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    margin-bottom: 20px;
+  }
 }
 </style>
+
+<p><a href="/tup-lab-website/gallery/" class="back-button"><svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> 返回画廊</a></p>
 
 <div class="photo-grid">
   
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(1).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(1).jpg" alt="SENSE2015 (1).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(1).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(1).jpg" alt="SENSE2015 (1).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(10).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(10).jpg" alt="SENSE2015 (10).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(10).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(10).jpg" alt="SENSE2015 (10).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(11).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(11).jpg" alt="SENSE2015 (11).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(11).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(11).jpg" alt="SENSE2015 (11).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(12).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(12).jpg" alt="SENSE2015 (12).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(12).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(12).jpg" alt="SENSE2015 (12).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(13).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(13).jpg" alt="SENSE2015 (13).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(13).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(13).jpg" alt="SENSE2015 (13).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(14).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(14).jpg" alt="SENSE2015 (14).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(14).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(14).jpg" alt="SENSE2015 (14).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(15).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(15).jpg" alt="SENSE2015 (15).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(15).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(15).jpg" alt="SENSE2015 (15).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(16).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(16).jpg" alt="SENSE2015 (16).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(16).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(16).jpg" alt="SENSE2015 (16).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(17).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(17).jpg" alt="SENSE2015 (17).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(17).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(17).jpg" alt="SENSE2015 (17).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(18).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(18).jpg" alt="SENSE2015 (18).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(18).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(18).jpg" alt="SENSE2015 (18).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(19).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(19).jpg" alt="SENSE2015 (19).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(19).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(19).jpg" alt="SENSE2015 (19).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(2).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(2).jpg" alt="SENSE2015 (2).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(2).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(2).jpg" alt="SENSE2015 (2).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(20).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(20).jpg" alt="SENSE2015 (20).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(20).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(20).jpg" alt="SENSE2015 (20).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(21).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(21).jpg" alt="SENSE2015 (21).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(21).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(21).jpg" alt="SENSE2015 (21).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(22).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(22).jpg" alt="SENSE2015 (22).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(22).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(22).jpg" alt="SENSE2015 (22).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(23).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(23).jpg" alt="SENSE2015 (23).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(23).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(23).jpg" alt="SENSE2015 (23).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(24).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(24).jpg" alt="SENSE2015 (24).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(24).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(24).jpg" alt="SENSE2015 (24).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(25).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(25).jpg" alt="SENSE2015 (25).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(25).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(25).jpg" alt="SENSE2015 (25).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(26).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(26).jpg" alt="SENSE2015 (26).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(26).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(26).jpg" alt="SENSE2015 (26).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(27).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(27).jpg" alt="SENSE2015 (27).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(27).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(27).jpg" alt="SENSE2015 (27).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(28).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(28).jpg" alt="SENSE2015 (28).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(28).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(28).jpg" alt="SENSE2015 (28).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(29).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(29).jpg" alt="SENSE2015 (29).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(29).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(29).jpg" alt="SENSE2015 (29).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(3).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(3).jpg" alt="SENSE2015 (3).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(3).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(3).jpg" alt="SENSE2015 (3).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(30).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(30).jpg" alt="SENSE2015 (30).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(30).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(30).jpg" alt="SENSE2015 (30).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(31).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(31).jpg" alt="SENSE2015 (31).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(31).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(31).jpg" alt="SENSE2015 (31).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(32).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(32).jpg" alt="SENSE2015 (32).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(32).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(32).jpg" alt="SENSE2015 (32).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(33).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(33).jpg" alt="SENSE2015 (33).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(33).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(33).jpg" alt="SENSE2015 (33).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(34).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(34).jpg" alt="SENSE2015 (34).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(34).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(34).jpg" alt="SENSE2015 (34).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(35).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(35).jpg" alt="SENSE2015 (35).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(35).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(35).jpg" alt="SENSE2015 (35).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(36).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(36).jpg" alt="SENSE2015 (36).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(36).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(36).jpg" alt="SENSE2015 (36).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(4).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(4).jpg" alt="SENSE2015 (4).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(4).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(4).jpg" alt="SENSE2015 (4).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(5).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(5).jpg" alt="SENSE2015 (5).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(5).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(5).jpg" alt="SENSE2015 (5).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(6).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(6).jpg" alt="SENSE2015 (6).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(6).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(6).jpg" alt="SENSE2015 (6).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(7).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(7).jpg" alt="SENSE2015 (7).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(7).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(7).jpg" alt="SENSE2015 (7).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(8).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(8).jpg" alt="SENSE2015 (8).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(8).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(8).jpg" alt="SENSE2015 (8).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
     
       <div class="photo-item">
-        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(9).jpg" target="_blank">
-          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(9).jpg" alt="SENSE2015 (9).jpg">
+        <a href="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(9).jpg">
+          <img src="/tup-lab-website/gallery/pictures/2015SENSE/pictures/SENSE2015%20(9).jpg" alt="SENSE2015 (9).jpg" loading="lazy" decoding="async">
         </a>
       </div>
     
   
 </div>
+
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  #back-to-top.visible {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+  }
+
+  #back-to-top svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 768px) {
+    #back-to-top {
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<div id="back-to-top" title="Back to Top">
+  <svg viewbox="0 0 24 24">
+    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+  </svg>
+</div>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-to-top');
+    if (window.scrollY > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
+
+  document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
 
 <p>老视频</p>
 
@@ -1578,7 +1748,7 @@ video {
   </div>
 
   <div>
-    © 2025
+    © 2026
     TUP Lab Website
       |   Built with
     <a href="https://github.com/greenelab/lab-website-template">
