@@ -6,7 +6,7 @@ nav:
 
 ---
 
-## 微信公众号文章
+<h2 class="story-heading"><i class="fa-brands fa-weixin" style="color: #07c160;"></i> 微信公众号文章</h2>
 
 <div class="story-grid">
 {% for article in site.data.wechat_articles %}
@@ -20,6 +20,19 @@ nav:
 </div>
 
 <style>
+/* Headings */
+.story-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.story-heading i {
+  font-size: 1.9rem;
+}
 :root {
   --story-card-bg: #fff;
   --story-card-title-color: #222;
@@ -44,6 +57,11 @@ nav:
   margin: 32px 0;
 }
 
+@keyframes cardFadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 /* Base Card UI */
 .story-card {
   background: var(--story-card-bg);
@@ -55,7 +73,18 @@ nav:
   text-decoration: none;
   color: inherit;
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s;
+  animation: cardFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+.story-card:nth-child(1) { animation-delay: 0.1s; }
+.story-card:nth-child(2) { animation-delay: 0.15s; }
+.story-card:nth-child(3) { animation-delay: 0.2s; }
+.story-card:nth-child(4) { animation-delay: 0.25s; }
+.story-card:nth-child(5) { animation-delay: 0.3s; }
+.story-card:nth-child(6) { animation-delay: 0.35s; }
+.story-card:nth-child(7) { animation-delay: 0.4s; }
+.story-card:nth-child(8) { animation-delay: 0.45s; }
+.story-card:nth-child(n+9) { animation-delay: 0.5s; }
 
 .story-card:hover {
   transform: translateY(-5px);
@@ -83,10 +112,6 @@ nav:
   padding: 12px 16px;
   color: var(--story-card-title-color);
   transition: color 0.2s;
-  display: -webkit-box;  
-  -webkit-box-orient: vertical;  
-  -webkit-line-clamp: 2;  
-  overflow: hidden;
 }
 
 .story-card:hover .story-card-title {
@@ -98,10 +123,6 @@ nav:
   color: var(--story-card-excerpt-color);
   font-size: 0.95rem;
   flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 @media (max-width: 700px) {
@@ -115,11 +136,11 @@ nav:
 {% include section.html %}
 
 
-## B站宣传号
+<h2 class="story-heading"><i class="fa-brands fa-bilibili" style="color: #00a1d6;"></i> B站宣传号</h2>
 {% include bilibili_carousel_tup.html %}
 
 
-## 抖音平台
+<h2 class="story-heading"><i class="fa-brands fa-tiktok" style="color: var(--story-card-title-color);"></i> 抖音平台</h2>
 
 <div class="story-grid">
   <a class="story-card" href="https://www.douyin.com/user/MS4wLjABAAAAo_qudO_LybuuiO1wSKpyqCSetOIM7fNmtJvshhQknIcnqyw7ccCWMQCLMLorobKb" target="_blank">

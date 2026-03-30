@@ -1,9 +1,9 @@
 <a href="{{ include.url }}" target="_blank" class="story-card">
   <img src="{{ include.cover | relative_url }}" alt="{{ include.title }}" class="story-card-cover">
   <div class="story-card-content">
-    <div class="story-card-title">{{ include.title }}</div>
+    <div class="story-card-title">{{ include.title | strip_html | truncate: 40, "..." }}</div>
     {% if include.excerpt %}
-    <div class="story-card-excerpt">{{ include.excerpt }}</div>
+    <div class="story-card-excerpt">{{ include.excerpt | strip_html | truncate: 70, "..." }}</div>
     {% endif %}
   </div>
 </a>
