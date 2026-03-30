@@ -2,7 +2,7 @@
   <div class="carousel">
     {% for video in include.videos %}
       <a href="{{ video.url }}" target="_blank" class="carousel-item">
-        <img src="{{ video.cover }}" alt="Video Cover">
+        <img src="{{ video.cover }}" alt="Video Cover" loading="lazy" decoding="async">
       </a>
     {% endfor %}
   </div>

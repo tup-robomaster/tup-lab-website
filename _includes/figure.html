@@ -14,6 +14,7 @@
       "
       alt="{{ include.caption | default: "figure image" | regex_strip }}"
       loading="lazy"
+      decoding="async"
       {% include fallback.html %}
     >
   </a>

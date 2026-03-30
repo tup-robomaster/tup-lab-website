@@ -1,7 +1,9 @@
-<div class="wechat-article-card">
-  <a href="{{ include.url }}" target="_blank" class="wechat-article-link">
-    <img src="{{ include.cover | relative_url }}" alt="{{ include.title }}" class="wechat-article-cover">
-    <div class="wechat-article-title">{{ include.title }}</div>
-  </a>
-  <div class="wechat-article-excerpt">{{ include.excerpt }}</div>
-</div>
+<a href="{{ include.url }}" target="_blank" class="story-card">
+  <img src="{{ include.cover | relative_url }}" alt="{{ include.title }}" class="story-card-cover">
+  <div class="story-card-content">
+    <div class="story-card-title">{{ include.title | strip_html | truncate: 40, "..." }}</div>
+    {% if include.excerpt %}
+    <div class="story-card-excerpt">{{ include.excerpt | strip_html | truncate: 70, "..." }}</div>
+    {% endif %}
+  </div>
+</a>
