@@ -1,0 +1,78 @@
+<div class="timeline-wrapper">
+  {% assign history = site.history | sort: "year" | reverse %}
+  
+  <!-- Side Navigation (Mobile Hidden) -->
+  <nav class="timeline-nav">
+    <div class="timeline-nav-inner">
+      <div class="timeline-nav-title">年份跳转</div>
+      <ul>
+        {% for item in history %}
+          <li><a href="#year-{{ item.year }}">{{ item.year }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+
+  <div class="timeline-container">
+    {% for item in history %}
+      {% assign loop_index = forloop.index0 | modulo: 2 %}
+      <div class="timeline-item {% if loop_index == 0 %}left{% else %}right{% endif %}" id="year-{{ item.year }}">
+        <div class="timeline-content">
+          <div class="timeline-year-badge">{{ item.year }}</div>
+          <h3>{{ item.title }}</h3>
+          
+          <div class="timeline-details">
+            {{ item.content | markdownify }}
+            
+            {% if item.achievements %}
+            <section class="history-section">
+              <h4><i class="fa-solid fa-trophy"></i> 历年成绩</h4>
+              <ul class="achievement-list">
+                {% for achievement in item.achievements %}
+                  <li>{{ achievement }}</li>
+                {% endfor %}
+              </ul>
+            </section>
+            {% endif %}
+
+            {% if item.members %}
+            <section class="history-section">
+              <h4><i class="fa-solid fa-users"></i> 核心队员</h4>
+              <div class="member-grid">
+                {% for member in item.members %}
+                  <div class="member-item">
+                    <div class="member-header">
+                      <span class="member-name">{{ member.name }}</span>
+                      <span class="member-role">{{ member.role }}</span>
+                    </div>
+                    {% if member.info %}
+                      <div class="member-info">{{ member.info }}</div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </section>
+            {% endif %}
+
+            {% if item.projects %}
+            <section class="history-section">
+              <h4><i class="fa-solid fa-gears"></i> 项目成就</h4>
+              <ul class="project-list">
+                {% for project in item.projects %}
+                  <li>{{ project }}</li>
+                {% endfor %}
+              </ul>
+            </section>
+            {% endif %}
+            
+            {% if item.description %}
+            <section class="history-description">
+              <p>{{ item.description }}</p>
+            </section>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

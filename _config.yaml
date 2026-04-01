@@ -43,6 +43,9 @@ collections:
   # generate page for each post
   posts:
     output: true
+  # data collection for team history
+  history:
+    output: false
 
 # jekyll plugins
 plugins:
