@@ -20,6 +20,7 @@ Visit the live site: **[tup-robomaster.github.io/tup-lab-website](https://tup-ro
 
 -   🏆 **战队成果 (Projects)**: 展示历年机器人的技术积淀，包括自瞄系统、能量机关及雷达系统。
 -   📖 **战队故事 (Story)**: 记录属于 TUP 的青春回忆与热爱。
+-   📜 **战队历史 (History)**: 追溯自 2015 年成立以来的每一个高光时刻，包括历年成绩与核心成员。
 -   📷 **战队相册 (Gallery)**: 捕捉实验室的日常与赛场的高光时刻。
 -   🚀 **了解 RoboMaster**: 传播工程师文化，诠释“初心高于胜负，成长大于输赢”。
 -   🤝 **加入我们 (Join)**: 期待充满激情的你加入这片热土。
@@ -56,6 +57,7 @@ bash .docker/run.sh
 | 目录/文件 | 说明 |
 | :--- | :--- |
 | `_members/` | 成员信息 (Markdown) |
+| `_history/` | 战队历年沿革 (由每年的数据独立构成) |
 | `_posts/` | 博客文章/动态 |
 | `_data/` | 结构化数据 (项目、视频、微信文章等) |
 | `_layouts/` | 页面布局模板 |
@@ -63,6 +65,47 @@ bash .docker/run.sh
 | `images/` | 图片与多媒体资源 |
 | `projects/` | 项目展示页面 |
 | `gallery/` | 相册页面 |
+
+---
+
+## 📝 维护指南 | Maintenance Guide
+
+为了确保 TUP 战队官网持续焕发活力，请参考以下指南进行日常维护。
+
+### 1. 战队历史沿革 (History)
+-   **位置**: `_history/`
+-   **操作**: 每创建一个名为 `YYYY.md` 的文件（如 `2025.md`），时间轴即会自动增加一个节点。
+-   **数据项**: 包含 `year` (年份), `title` (年度主题), `achievements` (获奖列表), `members` (核心队员及其详细贡献), `projects` (技术成就)。
+
+### 2. 成员信息 (Members)
+-   **位置**: `_members/`
+-   **操作**: 为每位新队员创建一个 `.md` 文件。
+-   **必填项**: `name` (姓名), `image` (照片路径), `role` (队内职务), `description` (简短介绍)。
+-   **社交链接**: 可以在 Front Matter 中添加 `links`（如 GitHub, WeChat）显示于个人卡片。
+
+### 3. 动态与消息 (Posts)
+-   **位置**: `_posts/`
+-   **操作**: 采用 Jekyll 标准博客格式 `YYYY-MM-DD-title.md`。
+-   **提示**: 它可以用于发布重磅战报或技术周报。
+
+### 4. 结构化数据维护 (Structural Data)
+-   **位置**: `_data/`
+-   **微信文章**: 编辑 `wechat_articles.yaml`。
+-   **B站视频**: 编辑 `bilibili_videos.yaml`。
+-   **战队成果 (Robots)**: 编辑 `projects.yaml`。每个项目可配置 `title`, `subtitle`, `image`, `link` 和 `description`。
+-   **成员荣誉 (Citations)**: 编辑 `citations.yaml` (如有需要)。
+
+### 5. 图片与资源 (Media)
+-   **目录**: `images/`
+-   **最佳实践**:
+    -   **背景图**: 对应 `images/background.png`。
+    -   **标志**: `images/logo.svg`。
+    -   **路径引用**: 在 Markdown 中引用图片建议使用绝对路径或 `{{ 'path/to/img' | relative_url }}`。
+
+### 6. 发布前的最后检查 (Review Checklist)
+-   [ ] **预览**: 本地运行后，分别在 PC 端和移动端检查布局。
+-   [ ] **模式检查**: 切换右上角的主题开关，确保在 Dark Mode 下内容可见且美观。
+-   [ ] **链接验证**: 确认所有外链（微信、B站）均能正常跳转。
 
 ---
 
